@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Space_Grotesk, Space_Mono, Syne } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ConvexClientProvider } from '@/components/convex-provider'
 import './globals.css'
 
 const _spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' })
@@ -41,7 +42,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${_spaceGrotesk.variable} ${_spaceMono.variable} ${_syne.variable}`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
-        {children}
+        <ConvexClientProvider>
+          {children}
+        </ConvexClientProvider>
         <Analytics />
       </body>
     </html>

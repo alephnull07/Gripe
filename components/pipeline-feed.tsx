@@ -1,9 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useQuery } from "convex/react"
+import { api } from "../convex/_generated/api"
 
 interface RunCard {
-  id: number
+  id: string
   type: "bug" | "feature"
   title: string
   timestamp: string
@@ -13,88 +15,18 @@ interface RunCard {
   detail: string
   files: string[]
   isLatest?: boolean
+  status?: string
 }
 
-const MOCK_RUNS: RunCard[] = [
-  {
-    id: 1,
-    type: "bug",
-    title: "Fix checkout crash on empty cart in HelloFresh iOS",
-    timestamp: "2m ago",
-    pr: "PR #142",
-    verified: true,
-    traceUrl: "#",
-    detail: "$0 spend \u00b7 posted to r/hellofresh",
-    files: ["src/cart/CartProvider.tsx", "src/checkout/validate.ts"],
-    isLatest: true,
-  },
-  {
-    id: 2,
-    type: "feature",
-    title: "Add recipe filtering by dietary preference",
-    timestamp: "14m ago",
-    pr: "PR #141",
-    verified: true,
-    traceUrl: "#",
-    detail: "Campaign live \u00b7 GRIPE10 \u00b7 9 sign-ups",
-    files: ["src/recipes/FilterBar.tsx", "src/api/recipes.ts", "src/types/diet.ts"],
-  },
-  {
-    id: 3,
-    type: "bug",
-    title: "Subscription renewal email sends duplicate",
-    timestamp: "38m ago",
-    pr: "PR #139",
-    verified: false,
-    traceUrl: "#",
-    detail: "$0 spend \u00b7 posted to r/hellofresh",
-    files: ["src/email/scheduler.ts"],
-  },
-  {
-    id: 4,
-    type: "feature",
-    title: "Weekly meal-prep summary push notification",
-    timestamp: "1h ago",
-    pr: "PR #137",
-    verified: true,
-    traceUrl: "#",
-    detail: "Campaign live \u00b7 PREP15 \u00b7 4 sign-ups",
-    files: ["src/notifications/push.ts", "src/meals/summary.ts"],
-  },
-  {
-    id: 5,
-    type: "bug",
-    title: "Delivery tracking map renders blank on Android 14",
-    timestamp: "2h ago",
-    pr: "PR #135",
-    verified: true,
-    traceUrl: "#",
-    detail: "$0 spend \u00b7 posted to r/hellofresh",
-    files: ["src/tracking/MapView.tsx", "src/tracking/useLocation.ts"],
-  },
-  {
-    id: 6,
-    type: "feature",
-    title: "Social sharing for custom recipe creations",
-    timestamp: "3h ago",
-    pr: "PR #133",
-    verified: true,
-    traceUrl: "#",
-    detail: "Campaign live \u00b7 SHARE20 \u00b7 12 sign-ups",
-    files: ["src/social/ShareCard.tsx", "src/api/share.ts"],
-  },
-  {
-    id: 7,
-    type: "bug",
-    title: "Coupon code GRIPE10 not applying at checkout",
-    timestamp: "4h ago",
-    pr: "PR #131",
-    verified: true,
-    traceUrl: "#",
-    detail: "$0 spend \u00b7 posted to r/hellofresh",
-    files: ["src/checkout/coupon.ts"],
-  },
-]
+function getTimeAgo(ts: number): string {
+  const diff = Date.now() - ts
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return "just now"
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  return `${Math.floor(hours / 24)}d ago`
+}
 
 function RunCardComponent({ run }: { run: RunCard }) {
   const [expanded, setExpanded] = useState(false)
@@ -192,17 +124,42 @@ function RunCardComponent({ run }: { run: RunCard }) {
 }
 
 export function PipelineFeed() {
+  const items = useQuery(api.pipeline.getAll)
+
+  const runs: RunCard[] =
+    items?.map((item, i) => ({
+      id: item._id,
+      type: (item.type === "bug" ? "bug" : "feature") as "bug" | "feature",
+      title: item.summary || item.title,
+      timestamp: getTimeAgo(item.updatedAt),
+      pr: item.pr || "Pending",
+      verified: item.verified || false,
+      traceUrl: "#",
+      detail: item.detail || item.statusMessage || `Status: ${item.status}`,
+      files: item.filesChanged || [],
+      isLatest: i === 0,
+      status: item.status,
+    })) || []
+
   return (
     <section className="flex flex-col gap-0">
       <h2 className="px-4 pb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-gripe-muted">
         Pipeline Feed
       </h2>
       <div className="relative flex flex-col gap-px">
-        {MOCK_RUNS.map((run) => (
+        {runs.length === 0 && (
+          <div className="px-4 py-8 text-center">
+            <p className="font-mono text-[11px] text-gripe-muted">
+              No pipeline items yet. Run the pipeline to see results here.
+            </p>
+          </div>
+        )}
+        {runs.map((run) => (
           <RunCardComponent key={run.id} run={run} />
         ))}
-        {/* Fade at bottom */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-gripe-bg to-transparent" />
+        {runs.length > 0 && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-gripe-bg to-transparent" />
+        )}
       </div>
     </section>
   )

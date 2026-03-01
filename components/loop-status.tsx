@@ -1,18 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useQuery } from "convex/react"
+import { api } from "../convex/_generated/api"
 
-const STEPS = [
-  { name: "SCRAPE", status: "done" as const },
-  { name: "CLASSIFY", status: "done" as const },
-  { name: "BUILD", status: "done" as const },
-  { name: "VERIFY", status: "running" as const },
-  { name: "OUTPUT", status: "pending" as const },
-  { name: "BRIEF", status: "pending" as const },
-  { name: "LISTEN", status: "pending" as const },
-]
-
-function StatusDot({ status }: { status: "done" | "running" | "pending" }) {
+function StatusDot({ status }: { status: string }) {
   if (status === "done") {
     return <span className="inline-block h-2 w-2 rounded-full bg-gripe-green" />
   }
@@ -23,18 +14,9 @@ function StatusDot({ status }: { status: "done" | "running" | "pending" }) {
 }
 
 export function LoopStatus() {
-  const [countdown, setCountdown] = useState(127)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown((prev) => (prev <= 0 ? 180 : prev - 1))
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [])
-
-  const minutes = Math.floor(countdown / 60)
-  const seconds = countdown % 60
-  const progress = ((180 - countdown) / 180) * 100
+  const currentRun = useQuery(api.runs.getCurrent)
+  const steps = currentRun?.steps || []
+  const isRunning = currentRun?.status === "running"
 
   return (
     <section className="flex flex-col gap-4">
@@ -44,7 +26,7 @@ export function LoopStatus() {
 
       {/* Steps */}
       <div className="flex flex-col gap-0">
-        {STEPS.map((step, i) => (
+        {steps.map((step, i) => (
           <div
             key={step.name}
             className="flex items-center gap-3 border-b border-gripe-border/50 py-2 last:border-b-0"
@@ -68,20 +50,31 @@ export function LoopStatus() {
         ))}
       </div>
 
-      {/* Countdown */}
+      {/* Run Now Button */}
       <div className="border-t border-gripe-border pt-4">
-        <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-gripe-muted">
-          Next Run In
-        </p>
-        <p className="font-[family-name:var(--font-heading)] text-3xl font-extrabold text-gripe-yellow">
-          {minutes}:{seconds.toString().padStart(2, "0")}
-        </p>
-        <div className="mt-2 h-0.5 w-full bg-gripe-border">
-          <div
-            className="h-full bg-gripe-yellow transition-all duration-1000"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
+        <button
+          onClick={async () => {
+            await fetch("/api/trigger-pipeline", { method: "POST" })
+          }}
+          disabled={isRunning}
+          className={`w-full py-3 font-mono text-sm font-bold uppercase tracking-wider transition-all ${
+            isRunning
+              ? "animate-pulse bg-gripe-yellow/20 text-gripe-yellow cursor-not-allowed"
+              : "bg-gripe-accent text-white hover:bg-gripe-accent/80 cursor-pointer"
+          }`}
+        >
+          {isRunning ? "\u27F3 Pipeline Running..." : "\u25B6 Run Now"}
+        </button>
+        {!isRunning && (
+          <>
+            <p className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-gripe-muted">
+              Next Scheduled Run
+            </p>
+            <p className="font-[family-name:var(--font-heading)] text-xl font-extrabold text-gripe-muted">
+              Tonight 11:59 PM
+            </p>
+          </>
+        )}
       </div>
     </section>
   )

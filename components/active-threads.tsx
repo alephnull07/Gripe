@@ -1,49 +1,32 @@
-const THREADS = [
-  {
-    thread: "reddit.com/r/hellofresh/comments/1abc...",
-    type: "bug" as const,
-    replies: 23,
-    lastActivity: "2m ago",
-    status: "WATCHING" as const,
-  },
-  {
-    thread: "reddit.com/r/mealprep/comments/2def...",
-    type: "feature" as const,
-    replies: 14,
-    lastActivity: "8m ago",
-    status: "WATCHING" as const,
-  },
-  {
-    thread: "reddit.com/r/hellofresh/comments/3ghi...",
-    type: "bug" as const,
-    replies: 45,
-    lastActivity: "22m ago",
-    status: "RESOLVED" as const,
-  },
-  {
-    thread: "reddit.com/r/cooking/comments/4jkl...",
-    type: "feature" as const,
-    replies: 8,
-    lastActivity: "1h ago",
-    status: "WATCHING" as const,
-  },
-  {
-    thread: "reddit.com/r/hellofresh/comments/5mno...",
-    type: "bug" as const,
-    replies: 31,
-    lastActivity: "2h ago",
-    status: "RESOLVED" as const,
-  },
-  {
-    thread: "reddit.com/r/startups/comments/6pqr...",
-    type: "feature" as const,
-    replies: 19,
-    lastActivity: "3h ago",
-    status: "RESOLVED" as const,
-  },
-]
+"use client"
+
+import { useQuery } from "convex/react"
+import { api } from "../convex/_generated/api"
+
+function getTimeAgo(ts: number): string {
+  const diff = Date.now() - ts
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return "just now"
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  return `${Math.floor(hours / 24)}d ago`
+}
 
 export function ActiveThreads() {
+  const items = useQuery(api.pipeline.getAll)
+
+  const threads =
+    items?.map((item) => ({
+      thread: item.url,
+      type: (item.type === "bug" ? "bug" : "feature") as "bug" | "feature",
+      replies: item.topComments?.length || 0,
+      lastActivity: getTimeAgo(item.updatedAt),
+      status: (item.status === "done" ? "RESOLVED" : "WATCHING") as
+        | "RESOLVED"
+        | "WATCHING",
+    })) || []
+
   return (
     <section className="flex flex-col gap-0">
       <h2 className="px-4 pb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-gripe-muted">
@@ -71,9 +54,19 @@ export function ActiveThreads() {
             </tr>
           </thead>
           <tbody>
-            {THREADS.map((t, i) => (
+            {threads.length === 0 && (
+              <tr>
+                <td
+                  colSpan={5}
+                  className="px-4 py-6 text-center font-mono text-[11px] text-gripe-muted"
+                >
+                  No active threads yet.
+                </td>
+              </tr>
+            )}
+            {threads.map((t, i) => (
               <tr
-                key={t.thread}
+                key={t.thread + i}
                 className={`border-b border-gripe-border/50 ${
                   i % 2 === 0 ? "bg-gripe-card-alt" : "bg-gripe-card"
                 }`}

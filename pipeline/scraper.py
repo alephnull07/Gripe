@@ -35,7 +35,6 @@ async def scrape_subreddit(url: str, source: str) -> ScrapeResult:
     )
 
     try:
-        # Create the task
         task = await client.tasks.create_task(
             task=task_text,
             start_url=url,

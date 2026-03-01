@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useQuery } from "convex/react"
+import { api } from "../convex/_generated/api"
 
 function LiveIndicator() {
   return (
@@ -65,6 +67,8 @@ function StatBlock({ value, label }: StatBlockProps) {
 }
 
 export function TopBar() {
+  const stats = useQuery(api.pipeline.getStats)
+
   return (
     <header className="flex items-center justify-between border-b border-gripe-border px-4 py-4 lg:px-6">
       {/* Left: Logo */}
@@ -79,9 +83,9 @@ export function TopBar() {
 
       {/* Center: Stats */}
       <div className="hidden items-center divide-x divide-gripe-border md:flex">
-        <StatBlock value="6" label="Items Shipped" />
-        <StatBlock value="24" label="Users Acquired" />
-        <StatBlock value="$140" label="Ad Spend" />
+        <StatBlock value={String(stats?.itemsShipped || 0)} label="Items Shipped" />
+        <StatBlock value={String(stats?.featuresDone || 0)} label="Features Built" />
+        <StatBlock value={String(stats?.bugsDone || 0)} label="Bugs Fixed" />
       </div>
 
       {/* Right: Live + Clock */}
