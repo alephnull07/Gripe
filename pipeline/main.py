@@ -8,6 +8,10 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'), override=True)
 
+from lmnr import Laminar, observe
+
+Laminar.initialize()
+
 from scraper import scrape_all
 from classifier import classify_posts
 from viability import validate_bugs, check_viability
@@ -51,6 +55,7 @@ async def run_with_spinner(label: str, coro):
     return result
 
 
+@observe(name="gripe-pipeline")
 async def main():
     print("=" * 50)
     print("  Gripe Pipeline")
@@ -102,9 +107,16 @@ async def main():
     print("\n[4/4] Pushing to Convex dashboard")
     update_run_step(run_id, "BUILD", "running")
 
+    # Build Laminar trace URL for this pipeline run
+    trace_id = Laminar.get_trace_id()
+    lmnr_project_id = os.getenv("LMNR_PROJECT_ID", "")
+    trace_url = f"https://laminar.sh/project/{lmnr_project_id}/traces?traceId={trace_id}" if trace_id and lmnr_project_id else None
+    if trace_url:
+        print(f"       Laminar trace: {trace_url}")
+
     items_for_convex = []
     for p in accepted_bugs:
-        items_for_convex.append({
+        item = {
             "title": p.original.title,
             "body": p.original.body,
             "summary": p.summary,
@@ -115,9 +127,12 @@ async def main():
             "url": p.original.url,
             "upvotes": p.original.upvotes,
             "topComments": p.original.top_comments,
-        })
+        }
+        if trace_url:
+            item["traceUrl"] = trace_url
+        items_for_convex.append(item)
     for p in accepted_features:
-        items_for_convex.append({
+        item = {
             "title": p.original.title,
             "body": p.original.body,
             "summary": p.summary,
@@ -128,7 +143,10 @@ async def main():
             "url": p.original.url,
             "upvotes": p.original.upvotes,
             "topComments": p.original.top_comments,
-        })
+        }
+        if trace_url:
+            item["traceUrl"] = trace_url
+        items_for_convex.append(item)
 
     if items_for_convex:
         item_ids = add_items(items_for_convex)

@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from typing import Literal
 
 from browser_use_sdk import AsyncBrowserUse
+from lmnr import observe
 
 
 class RedditPost(BaseModel):
@@ -21,6 +22,7 @@ class ScrapeResult(BaseModel):
     posts: list[RedditPost]
 
 
+@observe(name="scrape_subreddit")
 async def scrape_subreddit(url: str, source: str) -> ScrapeResult:
     client = AsyncBrowserUse(api_key=os.getenv("BROWSER_USE_API_KEY"))
 
@@ -59,6 +61,7 @@ async def scrape_subreddit(url: str, source: str) -> ScrapeResult:
         return ScrapeResult(posts=[])
 
 
+@observe(name="scrape_all")
 async def scrape_all() -> list[RedditPost]:
     result_ours, result_competitor = await asyncio.gather(
         scrape_subreddit("https://www.reddit.com/r/YCHackathonDemo/best/", "our_app"),

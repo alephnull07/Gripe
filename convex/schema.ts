@@ -19,6 +19,7 @@ export default defineSchema({
     verified: v.optional(v.boolean()),
     filesChanged: v.optional(v.array(v.string())),
     detail: v.optional(v.string()),
+    traceUrl: v.optional(v.string()),
     createdAt: v.number(),
     updatedAt: v.number(),
   })

@@ -4,6 +4,7 @@ import re
 
 from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage
+from lmnr import observe
 
 from classifier import ClassifiedPost
 
@@ -53,13 +54,25 @@ def extract_raw_text(content) -> str:
 # Bug validation (Claude via Bedrock)
 # ---------------------------------------------------------------------------
 
+@observe(name="validate_bug")
 async def validate_bug(post: ClassifiedPost) -> bool:
     """Ask Claude to confirm this is a real, actionable bug."""
-    prompt = f"""You are reviewing a post that was classified as a BUG report.
-Determine whether this is a REAL, ACTIONABLE bug that a development team should fix.
+    prompt = f"""You are reviewing a Reddit post that was classified as a BUG report.
+Determine whether this describes something broken or not working in the product.
 
-A real bug means: something is clearly broken, crashing, not working as expected, or causing errors.
-Reject vague complaints, user errors, or posts that don't describe a specific technical issue.
+ACCEPT if the user describes ANY of these:
+- Something that doesn't work, is broken, crashes, errors out, or behaves unexpectedly
+- A button, page, feature, or flow that fails or is unresponsive
+- UI elements that are missing, misaligned, or not rendering correctly
+- Performance issues (slow, hanging, freezing)
+
+ONLY REJECT if:
+- The post is clearly NOT about a bug (e.g. a feature request, general question, or off-topic)
+- The post is obvious spam or trolling with no real content
+
+Be LENIENT. Real users don't write detailed technical bug reports — they say things like
+"the login button is broken" or "this page won't load." That is enough to accept.
+When in doubt, ACCEPT the bug.
 
 Title: {post.original.title}
 Body: {post.original.body}
@@ -85,6 +98,7 @@ Respond with ONLY valid JSON, no markdown backticks:
         return True  # Accept on error rather than silently dropping items
 
 
+@observe(name="validate_bugs")
 async def validate_bugs(bugs: list[ClassifiedPost]) -> list[ClassifiedPost]:
     results = await asyncio.gather(*[validate_bug(b) for b in bugs])
     return [b for b, accepted in zip(bugs, results) if accepted]
@@ -94,6 +108,7 @@ async def validate_bugs(bugs: list[ClassifiedPost]) -> list[ClassifiedPost]:
 # Feature viability (Claude via Bedrock)
 # ---------------------------------------------------------------------------
 
+@observe(name="check_feature_viability")
 async def check_feature_viability(post: ClassifiedPost) -> bool:
     """Ask Claude whether this feature request is viable and safe."""
     prompt = f"""You are a security-conscious senior product manager. Your job is to evaluate
@@ -200,6 +215,7 @@ Respond with ONLY valid JSON, no markdown backticks:
         return True  # Accept on error rather than silently dropping items
 
 
+@observe(name="check_viability")
 async def check_viability(features: list[ClassifiedPost]) -> list[ClassifiedPost]:
     results = await asyncio.gather(*[check_feature_viability(f) for f in features])
     return [f for f, viable in zip(features, results) if viable]

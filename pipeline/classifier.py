@@ -6,6 +6,7 @@ from typing import Literal
 
 from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage
+from lmnr import observe
 
 from scraper import RedditPost
 
@@ -42,6 +43,7 @@ llm = ChatBedrockConverse(
 )
 
 
+@observe(name="classify_post")
 async def classify_post(post: RedditPost) -> ClassifiedPost:
     prompt = f"""Classify this Reddit post into exactly one category:
 
@@ -85,6 +87,7 @@ Respond with ONLY valid JSON, no markdown backticks:
         )
 
 
+@observe(name="classify_posts")
 async def classify_posts(posts: list[RedditPost]) -> list[ClassifiedPost]:
     tasks = [classify_post(post) for post in posts]
     return await asyncio.gather(*tasks)

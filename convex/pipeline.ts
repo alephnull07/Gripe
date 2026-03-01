@@ -53,6 +53,7 @@ export const addItems = mutation({
         url: v.string(),
         upvotes: v.number(),
         topComments: v.array(v.string()),
+        traceUrl: v.optional(v.string()),
       })
     ),
   },
@@ -80,6 +81,7 @@ export const updateItemStatus = mutation({
     verified: v.optional(v.boolean()),
     filesChanged: v.optional(v.array(v.string())),
     detail: v.optional(v.string()),
+    traceUrl: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const { id, ...updates } = args;

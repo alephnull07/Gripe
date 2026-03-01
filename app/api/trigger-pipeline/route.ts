@@ -29,11 +29,26 @@ export async function POST() {
   const logFd = fs.openSync(logFile, "a");
   fs.writeSync(logFd, `\n${"=".repeat(60)}\n[${new Date().toISOString()}] Pipeline run started (runId: ${runId})\n${"=".repeat(60)}\n`);
 
-  // Run scraper, then orchestrator sequentially in a shell
-  // If the process fails, mark the run as completed so the UI doesn't get stuck
+  // Run pipeline + orchestrator in PARALLEL:
+  // - Python pipeline: scrape → classify → validate → push items to Convex
+  // - TS orchestrator: pre-warm sandbox → poll for items → build → verify → PR
+  // The orchestrator starts creating the sandbox immediately while scraping happens.
+  // If both fail, mark the run as completed so the UI doesn't get stuck.
+  const envFile = `${process.cwd()}/.env`;
   const shellCmd = runId
-    ? `(cd "${pipelineDir}" && python3 main.py && cd "${orchestratorDir}" && npx tsx --env-file="${process.cwd()}/.env" src/main.ts) || curl -s -X POST "${CONVEX_SITE_URL}/api/runs/complete" -H "Content-Type: application/json" -d '{"id":"${runId}","itemsProcessed":0}'`
-    : `cd "${pipelineDir}" && python3 main.py && cd "${orchestratorDir}" && npx tsx --env-file="${process.cwd()}/.env" src/main.ts`;
+    ? `(cd "${orchestratorDir}" && npx tsx --env-file="${envFile}" src/main.ts) &
+       ORCH_PID=$!
+       cd "${pipelineDir}" && python3 main.py
+       PIPE_EXIT=$?
+       wait $ORCH_PID
+       ORCH_EXIT=$?
+       if [ $PIPE_EXIT -ne 0 ] && [ $ORCH_EXIT -ne 0 ]; then
+         curl -s -X POST "${CONVEX_SITE_URL}/api/runs/complete" -H "Content-Type: application/json" -d '{"id":"${runId}","itemsProcessed":0}'
+       fi`
+    : `(cd "${orchestratorDir}" && npx tsx --env-file="${envFile}" src/main.ts) &
+       ORCH_PID=$!
+       cd "${pipelineDir}" && python3 main.py
+       wait $ORCH_PID`;
 
   const child = spawn("bash", ["-c", shellCmd], {
     detached: true,

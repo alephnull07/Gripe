@@ -22,6 +22,11 @@
 import { Daytona } from "@daytonaio/sdk";
 import AnthropicBedrock from "@anthropic-ai/bedrock-sdk";
 import { BrowserUse } from "browser-use-sdk";
+import { Laminar, observe } from "@lmnr-ai/lmnr";
+
+// ── Initialize Laminar tracing ──────────────────────────────────────────────
+
+Laminar.initialize({});
 
 // ── Clients ──────────────────────────────────────────────────────────────────
 
@@ -71,7 +76,7 @@ async function fetchDetectedItems(): Promise<PipelineItem[]> {
   if (!resp.ok) {
     throw new Error(`Failed to fetch items: ${resp.status} ${await resp.text()}`);
   }
-  return (await resp.json()).items;
+  return ((await resp.json()) as { items: PipelineItem[] }).items;
 }
 
 async function updateItemStatus(
@@ -105,22 +110,96 @@ async function completeRun(runId: string, itemsProcessed: number) {
 
 // ── Sandbox helpers ──────────────────────────────────────────────────────────
 
-async function readSourceFiles(
-  sandbox: Awaited<ReturnType<Daytona["create"]>>
-): Promise<Record<string, string>> {
-  const find = await sandbox.process.executeCommand(
+type Sandbox = Awaited<ReturnType<Daytona["create"]>>;
+
+async function readSourceFiles(sandbox: Sandbox): Promise<Record<string, string>> {
+  // Batch read: dump all source files with delimiters in a single command
+  // instead of 73+ individual `cat` calls
+  const cmd =
     `find /home/daytona/app -type f \\( -name "*.tsx" -o -name "*.ts" -o -name "*.css" \\) ` +
-      `-not -path "*/node_modules/*" -not -path "*/.next/*" -not -path "*/.git/*" -not -path "*/dist/*"`
-  );
-  const paths = find.result.trim().split("\n").filter(Boolean);
-  console.log(`   Found ${paths.length} source files`);
+    `-not -path "*/node_modules/*" -not -path "*/.next/*" -not -path "*/.git/*" -not -path "*/dist/*" ` +
+    `-exec sh -c 'for f; do echo "===FILE:$f==="; cat "$f"; done' _ {} +`;
+
+  const result = await sandbox.process.executeCommand(cmd);
+  const output = result.result;
 
   const files: Record<string, string> = {};
-  for (const fp of paths) {
-    const cat = await sandbox.process.executeCommand(`cat "${fp}"`);
-    files[fp] = cat.result;
+  const parts = output.split("===FILE:");
+  for (const part of parts) {
+    if (!part.trim()) continue;
+    const eol = part.indexOf("===\n");
+    if (eol === -1) continue;
+    const filePath = part.slice(0, eol);
+    const content = part.slice(eol + 4);
+    files[filePath] = content;
   }
+  console.log(`   Found ${Object.keys(files).length} source files (batch read)`);
   return files;
+}
+
+async function waitForDevServer(sandbox: Sandbox, port = 3000, maxWaitMs = 30_000): Promise<void> {
+  const start = Date.now();
+  while (Date.now() - start < maxWaitMs) {
+    try {
+      const check = await sandbox.process.executeCommand(
+        `curl -s -o /dev/null -w "%{http_code}" http://localhost:${port} 2>/dev/null || echo "000"`
+      );
+      const code = check.result.trim();
+      if (code !== "000" && code !== "") return; // Server is responding
+    } catch {
+      // ignore
+    }
+    await new Promise((r) => setTimeout(r, 2_000));
+  }
+  console.log(`   Dev server didn't respond in ${maxWaitMs / 1000}s, proceeding anyway`);
+}
+
+async function prewarmSandbox(): Promise<Sandbox> {
+  const pat = process.env.GITHUB_PAT!;
+  const repoPath = process.env.PRODUCT_REPO!;
+
+  console.log("[PREWARM] Creating sandbox...");
+  const sandbox = await daytona.create({
+    snapshot: "daytonaio/sandbox:0.6.0",
+    name: `gripe-warm-${Date.now()}`,
+    public: true,
+  });
+  console.log(`[PREWARM] Sandbox: ${sandbox.id}`);
+
+  console.log("[PREWARM] Cloning repo...");
+  await sandbox.process.executeCommand(
+    `git clone https://${pat}@github.com/${repoPath}.git /home/daytona/app`
+  );
+
+  console.log("[PREWARM] Installing dependencies...");
+  await sandbox.process.executeCommand("cd /home/daytona/app && npm install");
+
+  console.log("[PREWARM] Starting dev server...");
+  await sandbox.process.createSession("dev-server");
+  await sandbox.process.executeSessionCommand("dev-server", {
+    command: "cd /home/daytona/app && npm run dev",
+    runAsync: true,
+  });
+
+  console.log("[PREWARM] Waiting for dev server...");
+  await waitForDevServer(sandbox);
+
+  console.log("[PREWARM] Sandbox ready!\n");
+  return sandbox;
+}
+
+async function pollForItems(timeoutSec = 300): Promise<PipelineItem[]> {
+  const start = Date.now();
+  while (Date.now() - start < timeoutSec * 1000) {
+    try {
+      const items = await fetchDetectedItems();
+      if (items.length > 0) return items;
+    } catch {
+      // Convex might not have items yet, keep polling
+    }
+    await new Promise((r) => setTimeout(r, 5_000));
+  }
+  return [];
 }
 
 function formatForClaude(files: Record<string, string>): string {
@@ -130,23 +209,75 @@ function formatForClaude(files: Record<string, string>): string {
 }
 
 function parsePatches(raw: string): Array<{ filePath: string; content: string }> {
+  // Try parsing the full response first
   try {
     return JSON.parse(raw);
   } catch {
-    const match = raw.match(/\[[\s\S]*\]/);
-    if (!match) throw new Error("Claude didn't return valid JSON patches");
+    // Fall through
+  }
+
+  // Try extracting a JSON array from surrounding text
+  const match = raw.match(/\[[\s\S]*\]/);
+  if (!match) throw new Error("Claude didn't return valid JSON patches");
+
+  try {
     return JSON.parse(match[0]);
+  } catch {
+    // Claude sometimes returns file content with unescaped characters.
+    // Try a more lenient extraction: find individual patch objects
+    const patchRegex = /\{\s*"filePath"\s*:\s*"([^"]+)"\s*,\s*"content"\s*:\s*/g;
+    const patches: Array<{ filePath: string; content: string }> = [];
+    let m;
+    while ((m = patchRegex.exec(raw)) !== null) {
+      const filePath = m[1];
+      // Find the content string start (after the key)
+      const contentStart = raw.indexOf('"', m.index + m[0].length);
+      if (contentStart === -1) continue;
+      // Walk forward to find the closing quote, handling escaped quotes
+      let i = contentStart + 1;
+      while (i < raw.length) {
+        if (raw[i] === '\\') { i += 2; continue; }
+        if (raw[i] === '"') break;
+        i++;
+      }
+      const content = JSON.parse(raw.slice(contentStart, i + 1));
+      patches.push({ filePath, content });
+    }
+    if (patches.length > 0) return patches;
+    throw new Error("Claude didn't return valid JSON patches");
   }
 }
 
 function parseBUResult(buResult: unknown): { pass: boolean; reason: string } | null {
   let output = (buResult as any).output ?? "";
-  while (output.includes('\\"')) {
+
+  // Try parsing at each level of unescaping — stop as soon as it works.
+  // BU sometimes double- or triple-escapes quotes; blindly stripping all \"
+  // breaks valid JSON where \" is a proper escape inside a string value.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const jsonMatch = output.match(/\{[\s\S]*"pass"[\s\S]*\}/);
+    if (jsonMatch) {
+      try {
+        return JSON.parse(jsonMatch[0]);
+      } catch {
+        // This level of escaping didn't work, try unescaping one more layer
+      }
+    }
+    if (!output.includes('\\"')) break;
     output = output.replace(/\\"/g, '"');
   }
-  const jsonMatch = output.match(/\{[\s\S]*"pass"[\s\S]*\}/);
-  if (!jsonMatch) return null;
-  return JSON.parse(jsonMatch[0]);
+
+  // Last resort: extract pass boolean with regex
+  const passMatch = output.match(/"pass"\s*:\s*(true|false)/);
+  const reasonMatch = output.match(/"reason"\s*:\s*"([^"]*)"/);
+  if (passMatch) {
+    return {
+      pass: passMatch[1] === "true",
+      reason: reasonMatch?.[1] ?? "Parsed from unstructured output",
+    };
+  }
+
+  return null;
 }
 
 // ── PR helper ────────────────────────────────────────────────────────────────
@@ -159,9 +290,13 @@ async function openPR(
   const pat = process.env.GITHUB_PAT!;
   const repoPath = process.env.PRODUCT_REPO!;
   const branchName = `gripe/${item.type}-${item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 50)}`;
+  // Sanitize user content for shell safety
+  const safeTitle = item.title.replace(/[`$"\\]/g, "");
+  const safeBody = item.body.replace(/[`$"\\]/g, "").slice(0, 200);
+
   const commitMsg = item.type === "bug"
-    ? `fix: ${item.title}\n\nAutonomously fixed by GRIPE pipeline.\nReddit complaint: "${item.body}"`
-    : `feat: ${item.title}\n\nAutonomously built by GRIPE pipeline.\nReddit request: "${item.body}"`;
+    ? `fix: ${safeTitle}\n\nAutonomously fixed by GRIPE pipeline.`
+    : `feat: ${safeTitle}\n\nAutonomously built by GRIPE pipeline.`;
 
   console.log("   Opening PR...");
 
@@ -171,31 +306,35 @@ async function openPR(
   await sandbox.process.executeCommand(
     `cd /home/daytona/app && git checkout -b ${branchName}`
   );
+  // Write commit message to file to avoid shell escaping issues
+  await sandbox.fs.uploadFile(Buffer.from(commitMsg), "/tmp/commit-msg.txt");
   await sandbox.process.executeCommand(
-    `cd /home/daytona/app && git add -A && git commit -m "${commitMsg.replace(/"/g, '\\"')}"`
+    `cd /home/daytona/app && git add -A && git commit -F /tmp/commit-msg.txt`
   );
   await sandbox.process.executeCommand(
     `cd /home/daytona/app && git push origin ${branchName}`
   );
   console.log(`   Pushed branch: ${branchName}`);
 
-  const prBody = JSON.stringify({
-    title: `[GRIPE] ${item.type === "bug" ? "Fix" : "Feat"}: ${item.title}`,
+  // Write PR body JSON to file to avoid shell escaping issues with curl -d
+  const prPayload = {
+    title: `[GRIPE] ${item.type === "bug" ? "Fix" : "Feat"}: ${safeTitle}`,
     head: branchName,
     base: "main",
     body: `## ${item.type === "bug" ? "Bug Fix" : "Feature"}\n\n` +
-      `**User complaint (${item.subreddit}):**\n> ${item.body}\n\n` +
+      `**User complaint (${item.subreddit}):**\n> ${safeBody}\n\n` +
       `**Summary:** ${item.summary}\n\n` +
       `**Files changed:**\n${patches.map((p) => `- \`${p.filePath.replace("/home/daytona/app/", "")}\``).join("\n")}\n\n` +
       `**Verified by:** Browser Use Cloud (click-tested in Daytona sandbox)\n\n` +
       `---\n_Autonomously generated by GRIPE pipeline_`,
-  });
+  };
+  await sandbox.fs.uploadFile(Buffer.from(JSON.stringify(prPayload)), "/tmp/pr-body.json");
 
   const curlResult = await sandbox.process.executeCommand(
     `curl -s -X POST "https://api.github.com/repos/${repoPath}/pulls" ` +
     `-H "Authorization: Bearer ${pat}" ` +
     `-H "Accept: application/vnd.github+json" ` +
-    `-d '${prBody.replace(/'/g, "'\\''")}'`
+    `-d @/tmp/pr-body.json`
   );
 
   try {
@@ -312,7 +451,12 @@ Return your final answer as ONLY a JSON object (no other text):
 
 // ── Process a single item ────────────────────────────────────────────────────
 
-async function processItem(item: PipelineItem, runId: string): Promise<boolean> {
+async function processItem(
+  item: PipelineItem,
+  runId: string,
+  prewarmedSandbox?: Sandbox | null,
+): Promise<boolean> {
+  return observe({ name: "process-item" }, async () => {
   const pat = process.env.GITHUB_PAT!;
   const repoPath = process.env.PRODUCT_REPO!;
 
@@ -324,40 +468,42 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
   // Mark as building
   await updateItemStatus(item._id, "building", { statusMessage: "Creating sandbox..." });
 
-  // 1. Create sandbox
-  console.log("1. Creating sandbox...");
-  const sandbox = await daytona.create({
-    snapshot: "daytonaio/sandbox:0.6.0",
-    name: `gripe-${item.type}-${Date.now()}`,
-    public: true,
-  });
-  console.log(`   Sandbox: ${sandbox.id}`);
+  let sandbox: Sandbox;
 
-  try {
-    // 2. Clone repo
+  if (prewarmedSandbox) {
+    // Use the pre-warmed sandbox (already cloned, installed, dev server running)
+    sandbox = prewarmedSandbox;
+    console.log(`1. Using pre-warmed sandbox: ${sandbox.id}`);
+  } else {
+    // Create a fresh sandbox
+    console.log("1. Creating sandbox...");
+    sandbox = await daytona.create({
+      snapshot: "daytonaio/sandbox:0.6.0",
+      name: `gripe-${item.type}-${Date.now()}`,
+      public: true,
+    });
+    console.log(`   Sandbox: ${sandbox.id}`);
+
     console.log("2. Cloning repo...");
     await sandbox.process.executeCommand(
       `git clone https://${pat}@github.com/${repoPath}.git /home/daytona/app`
     );
-    console.log("   Cloned to /home/daytona/app");
 
-    // 3. Install deps
     console.log("3. Installing dependencies...");
     await updateItemStatus(item._id, "building", { statusMessage: "Installing dependencies..." });
     await sandbox.process.executeCommand("cd /home/daytona/app && npm install");
-    console.log("   Dependencies installed");
 
-    // 4. Start dev server
     console.log("4. Starting dev server...");
     await sandbox.process.createSession("dev-server");
     await sandbox.process.executeSessionCommand("dev-server", {
       command: "cd /home/daytona/app && npm run dev",
       runAsync: true,
     });
-    console.log("   Waiting for Next.js to compile (~15s)...");
-    await new Promise((r) => setTimeout(r, 15_000));
+    await waitForDevServer(sandbox);
+  }
 
-    // 5. Get preview URL
+  try {
+    // Get preview URL
     const preview = await sandbox.getPreviewLink(3000);
     console.log(`   Preview: ${preview.url}\n`);
 
@@ -390,8 +536,8 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
     }
 
     // 9. Wait for hot reload
-    console.log("D. Waiting for hot reload (~8s)...");
-    await new Promise((r) => setTimeout(r, 8_000));
+    console.log("D. Waiting for hot reload (~3s)...");
+    await new Promise((r) => setTimeout(r, 3_000));
 
     // 10. Verify with Browser Use
     console.log("E. Verifying with Browser Use...\n");
@@ -410,6 +556,12 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
     if (verification) {
       console.log("   Verified:", JSON.stringify(verification));
 
+      // Build Laminar trace URL for this item
+      const traceId = Laminar.getLaminarSpanContext()?.traceId;
+      const lmnrProjectId = process.env.LMNR_PROJECT_ID || "";
+      const traceUrl = traceId && lmnrProjectId ? `https://laminar.sh/project/${lmnrProjectId}/traces?traceId=${traceId}` : undefined;
+      if (traceUrl) console.log(`   Laminar trace: ${traceUrl}`);
+
       if (verification.pass) {
         console.log(`\n   ${item.type.toUpperCase()} FIX VERIFIED\n`);
 
@@ -426,6 +578,7 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
           filesChanged,
           detail: verification.reason,
           statusMessage: prUrl ? "PR opened" : "Verified but PR failed",
+          traceUrl,
         });
 
         await updateRunStep(runId, "DEPLOY", "done");
@@ -436,15 +589,20 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
           verified: false,
           detail: verification.reason,
           statusMessage: "Verification failed",
+          traceUrl,
         });
         return false;
       }
     } else {
+      const traceId = Laminar.getLaminarSpanContext()?.traceId;
+      const lmnrProjectId2 = process.env.LMNR_PROJECT_ID || "";
+      const traceUrl = traceId && lmnrProjectId2 ? `https://laminar.sh/project/${lmnrProjectId2}/traces?traceId=${traceId}` : undefined;
       console.log("\n   Could not parse BU output\n");
       await updateItemStatus(item._id, "done", {
         verified: false,
         detail: "Could not parse Browser Use verification output",
         statusMessage: "Verification parse error",
+        traceUrl,
       });
       return false;
     }
@@ -453,6 +611,7 @@ async function processItem(item: PipelineItem, runId: string): Promise<boolean> 
     await sandbox.delete();
     console.log("   Sandbox deleted.");
   }
+  });
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
@@ -466,19 +625,24 @@ async function main() {
   console.log("  GRIPE Orchestrator — BUILD / VERIFY / DEPLOY");
   console.log("=".repeat(50) + "\n");
 
-  // 1. Fetch detected items from Convex
-  console.log("Fetching detected items from Convex...");
-  let items: PipelineItem[];
-  try {
-    items = await fetchDetectedItems();
-  } catch (e) {
-    console.error("Failed to fetch items from Convex:", e);
-    console.log("Hint: make sure the GET /api/items route is deployed in Convex");
-    process.exit(1);
-  }
+  // 1. Start pre-warming a sandbox IMMEDIATELY (runs during Python pipeline scraping)
+  console.log("Starting sandbox pre-warm (runs in parallel with Python pipeline)...\n");
+  const warmSandboxPromise = prewarmSandbox().catch((err) => {
+    console.error("[PREWARM] Failed:", (err as Error).message);
+    return null;
+  });
+
+  // 2. Poll Convex for detected items (Python pipeline will push them when done)
+  console.log("Polling Convex for detected items...");
+  const items = await pollForItems(300); // 5 min timeout
 
   if (items.length === 0) {
-    console.log("No items with status 'detected' found. Nothing to do.");
+    console.log("No items found after polling. Cleaning up...");
+    const warmSandbox = await warmSandboxPromise;
+    if (warmSandbox) {
+      await warmSandbox.delete();
+      console.log("Pre-warmed sandbox deleted.");
+    }
     return;
   }
 
@@ -487,18 +651,18 @@ async function main() {
     console.log(`  - [${item.type.toUpperCase()}] ${item.title} (${item.severity})`);
   }
 
-  // 2. Get or create a pipeline run
-  // We'll look for an existing run that's on the BUILD step, or create context for updates
-  // The Python pipeline already created the run, so we find it
+  // 3. Get the pre-warmed sandbox (should be ready by now since scraping takes ~50s)
+  const warmSandbox = await warmSandboxPromise;
+
+  // 4. Get or create a pipeline run
   const runResp = await fetch(`${CONVEX_SITE_URL}/api/runs/current`);
   let runId: string;
   if (runResp.ok) {
-    const runData = await runResp.json();
-    runId = runData._id ?? runData.runId;
+    const runData = (await runResp.json()) as { _id?: string; runId?: string };
+    runId = runData._id ?? runData.runId ?? "";
     console.log(`\nUsing existing run: ${runId}`);
   } else {
-    // Trigger a new run
-    const triggerResp = await convexFetch("/api/runs/trigger", "POST");
+    const triggerResp = (await convexFetch("/api/runs/trigger", "POST")) as { runId: string };
     runId = triggerResp.runId;
     console.log(`\nTriggered new run: ${runId}`);
   }
@@ -506,23 +670,28 @@ async function main() {
   // Mark BUILD step as running
   await updateRunStep(runId, "BUILD", "running");
 
-  // 3. Process each item
-  let successCount = 0;
-  for (const item of items) {
-    try {
-      const success = await processItem(item, runId);
-      if (success) successCount++;
-    } catch (err) {
-      console.error(`\nFailed to process "${item.title}":`, (err as Error).message);
-      await updateItemStatus(item._id, "done", {
-        verified: false,
-        detail: `Pipeline error: ${(err as Error).message}`,
-        statusMessage: "Pipeline error",
+  // 5. Process items in PARALLEL
+  //    First item gets the pre-warmed sandbox, others create their own concurrently
+  const results = await Promise.allSettled(
+    items.map((item, i) => {
+      const sandbox = i === 0 ? warmSandbox : null;
+      return processItem(item, runId, sandbox).catch(async (err) => {
+        console.error(`\nFailed to process "${item.title}":`, (err as Error).message);
+        await updateItemStatus(item._id, "done", {
+          verified: false,
+          detail: `Pipeline error: ${(err as Error).message}`,
+          statusMessage: "Pipeline error",
+        });
+        return false;
       });
-    }
-  }
+    })
+  );
 
-  // 4. Complete the run
+  const successCount = results.filter(
+    (r) => r.status === "fulfilled" && r.value === true
+  ).length;
+
+  // 6. Complete the run
   await updateRunStep(runId, "POST", "done");
   await completeRun(runId, successCount);
 

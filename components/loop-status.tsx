@@ -15,9 +15,13 @@ function StatusDot({ status }: { status: string }) {
 
 export function LoopStatus() {
   const currentRun = useQuery(api.runs.getCurrent)
-  const steps = currentRun?.steps || []
   const isRunning = currentRun?.status === "running"
   const isStale = currentRun?.status === "stale"
+  const isIdle = !currentRun || currentRun.status === "idle" || currentRun.status === "completed"
+  // When idle or completed, show all steps as pending (not green from last run)
+  const steps = isIdle
+    ? (currentRun?.steps || []).map((s: { name: string; status: string }) => ({ ...s, status: "pending" }))
+    : currentRun?.steps || []
 
   return (
     <section className="flex flex-col gap-4">

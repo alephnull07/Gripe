@@ -70,13 +70,21 @@ function RunCardComponent({ run }: { run: RunCard }) {
 
         {/* Middle row */}
         <div className="flex flex-wrap items-center gap-2">
-          <a
-            href="#"
-            onClick={(e) => e.stopPropagation()}
-            className="font-mono text-[11px] text-gripe-text underline decoration-gripe-muted underline-offset-2 hover:text-gripe-accent"
-          >
-            {run.pr} {"\u2197"}
-          </a>
+          {run.pr && run.pr !== "Pending" ? (
+            <a
+              href={run.pr}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-[11px] text-gripe-text underline decoration-gripe-muted underline-offset-2 hover:text-gripe-accent"
+            >
+              {run.pr.includes("github.com") ? run.pr.replace(/.*github\.com\//, "").replace(/\/pull\//, " #") : run.pr} {"\u2197"}
+            </a>
+          ) : (
+            <span className="font-mono text-[11px] text-gripe-muted">
+              {run.status === "detected" || run.status === "building" || run.status === "verifying" ? "PR pending..." : "No PR"}
+            </span>
+          )}
           {run.verified ? (
             <span className="font-mono text-[11px] text-gripe-green">
               VERIFIED
@@ -86,13 +94,17 @@ function RunCardComponent({ run }: { run: RunCard }) {
               UNVERIFIED
             </span>
           )}
-          <a
-            href={run.traceUrl}
-            onClick={(e) => e.stopPropagation()}
-            className="font-mono text-[11px] text-gripe-muted underline decoration-gripe-muted/50 underline-offset-2 hover:text-gripe-text"
-          >
-            Laminar trace {"\u2197"}
-          </a>
+          {run.traceUrl && run.traceUrl !== "#" && (
+            <a
+              href={run.traceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-[11px] text-gripe-muted underline decoration-gripe-muted/50 underline-offset-2 hover:text-gripe-text"
+            >
+              Laminar trace {"\u2197"}
+            </a>
+          )}
         </div>
 
         {/* Bottom row */}
@@ -134,7 +146,7 @@ export function PipelineFeed() {
       timestamp: getTimeAgo(item.updatedAt),
       pr: item.pr || "Pending",
       verified: item.verified || false,
-      traceUrl: "#",
+      traceUrl: item.traceUrl || "",
       detail: item.detail || item.statusMessage || `Status: ${item.status}`,
       files: item.filesChanged || [],
       isLatest: i === 0,
