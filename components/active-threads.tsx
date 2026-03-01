@@ -22,8 +22,9 @@ export function ActiveThreads() {
       type: (item.type === "bug" ? "bug" : "feature") as "bug" | "feature",
       replies: item.topComments?.length || 0,
       lastActivity: getTimeAgo(item.updatedAt),
-      status: (item.status === "done" ? "RESOLVED" : "WATCHING") as
+      status: (item.status === "done" ? "RESOLVED" : item.status === "failed" ? "UNRESOLVED" : "WATCHING") as
         | "RESOLVED"
+        | "UNRESOLVED"
         | "WATCHING",
     })) || []
 
@@ -94,9 +95,11 @@ export function ActiveThreads() {
                 <td className="px-4 py-2.5 text-right">
                   <span
                     className={`font-mono text-[11px] font-bold uppercase tracking-wider ${
-                      t.status === "WATCHING"
-                        ? "text-gripe-yellow"
-                        : "text-gripe-green"
+                      t.status === "UNRESOLVED"
+                        ? "text-gripe-accent"
+                        : t.status === "WATCHING"
+                          ? "text-gripe-yellow"
+                          : "text-gripe-green"
                     }`}
                   >
                     {t.status}

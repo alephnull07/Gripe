@@ -4,7 +4,7 @@
       "title": "Why is the login button broken? Is anyone else having the same issue",
       "body": "It's not redirecting me to the page for some reason. anyone having the same issue? need to get this fixed",
       "summary": "Login button is not redirecting users to the expected page",
-      "severity": "high",
+      "severity": "medium",
       "upvotes": 1,
       "url": "https://www.reddit.com/r/YCHackathonDemo/comments/1rhq580/why_is_the_login_button_broken_is_anyone_else/",
       "subreddit": "r/YCHackathonDemo",
@@ -20,7 +20,7 @@
     {
       "title": "Need this fix ASAP or im gonna fr stop using this app",
       "body": "why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...",
-      "summary": "User requests dark mode functionality to reduce eye strain",
+      "summary": "User requests dark mode implementation to reduce eye strain",
       "severity": "low",
       "upvotes": 1,
       "url": "https://www.reddit.com/r/competitorYCHackathon/comments/1rhq3t4/need_this_fix_asap_or_im_gonna_fr_stop_using_this/",

@@ -112,14 +112,19 @@ async function completeRun(runId: string, itemsProcessed: number) {
 
 type Sandbox = Awaited<ReturnType<Daytona["create"]>>;
 
-async function readSourceFiles(sandbox: Sandbox): Promise<Record<string, string>> {
-  // Batch read: dump all source files with delimiters in a single command
-  // instead of 73+ individual `cat` calls
+async function listSourceFiles(sandbox: Sandbox): Promise<string[]> {
   const cmd =
     `find /home/daytona/app -type f \\( -name "*.tsx" -o -name "*.ts" -o -name "*.css" \\) ` +
-    `-not -path "*/node_modules/*" -not -path "*/.next/*" -not -path "*/.git/*" -not -path "*/dist/*" ` +
-    `-exec sh -c 'for f; do echo "===FILE:$f==="; cat "$f"; done' _ {} +`;
+    `-not -path "*/node_modules/*" -not -path "*/.next/*" -not -path "*/.git/*" -not -path "*/dist/*"`;
+  const result = await sandbox.process.executeCommand(cmd);
+  return result.result.trim().split("\n").filter(Boolean);
+}
 
+async function readSelectedFiles(sandbox: Sandbox, paths: string[]): Promise<Record<string, string>> {
+  if (paths.length === 0) return {};
+  // Batch read only the selected files
+  const escaped = paths.map((p) => `"${p}"`).join(" ");
+  const cmd = `for f in ${escaped}; do echo "===FILE:$f==="; cat "$f" 2>/dev/null; done`;
   const result = await sandbox.process.executeCommand(cmd);
   const output = result.result;
 
@@ -133,8 +138,83 @@ async function readSourceFiles(sandbox: Sandbox): Promise<Record<string, string>
     const content = part.slice(eol + 4);
     files[filePath] = content;
   }
-  console.log(`   Found ${Object.keys(files).length} source files (batch read)`);
   return files;
+}
+
+// Files that should ALWAYS be included regardless of what Haiku picks
+const ALWAYS_INCLUDE_PATTERNS = [
+  /layout\.tsx$/,
+  /globals\.css$/,
+  /page\.tsx$/,
+  /tailwind\.config/,
+  /next\.config/,
+  /tsconfig/,
+];
+
+async function filterRelevantFiles(
+  allPaths: string[],
+  item: PipelineItem,
+): Promise<string[]> {
+  // Paths relative to app root for readability
+  const relPaths = allPaths.map((p) => p.replace("/home/daytona/app/", ""));
+
+  const prompt = `You are selecting which source files a developer needs to read to ${
+    item.type === "bug" ? "fix a bug" : "add a feature"
+  } in a Next.js app.
+
+TASK: ${item.summary}
+DETAILS: ${item.body}
+
+FILES IN THE PROJECT:
+${relPaths.map((p, i) => `${i + 1}. ${p}`).join("\n")}
+
+Select ALL files that are likely relevant. Be GENEROUS — it's much better to include
+a file that turns out to be unnecessary than to miss one that's needed. Include:
+- Files directly related to the feature/bug area
+- Layout files, CSS files, and config files that might need changes
+- Component files that could be affected
+- Any shared utilities or types used by the affected components
+
+Return ONLY a JSON array of the file numbers (integers), nothing else.
+Example: [1, 3, 7, 12, 15]`;
+
+  try {
+    const response = await anthropic.messages.create({
+      model: "us.anthropic.claude-3-5-haiku-20241022-v1:0",
+      max_tokens: 1024,
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const text = response.content[0].type === "text" ? response.content[0].text : "";
+    const arrMatch = text.match(/\[[\d\s,]+\]/);
+    if (!arrMatch) throw new Error("Haiku didn't return a valid array");
+    const indices: number[] = JSON.parse(arrMatch[0]);
+    const selected = new Set<string>();
+
+    // Add Haiku's picks
+    for (const idx of indices) {
+      const absPath = allPaths[idx - 1]; // 1-indexed
+      if (absPath) selected.add(absPath);
+    }
+
+    // Always include core files
+    for (const path of allPaths) {
+      if (ALWAYS_INCLUDE_PATTERNS.some((pat) => pat.test(path))) {
+        selected.add(path);
+      }
+    }
+
+    // Safety: if Haiku picked too few, fall back to all files
+    if (selected.size < 5) {
+      console.log(`   Haiku only picked ${selected.size} files, falling back to all ${allPaths.length}`);
+      return allPaths;
+    }
+
+    return Array.from(selected);
+  } catch (err) {
+    console.log(`   File filtering failed (${(err as Error).message}), using all files`);
+    return allPaths;
+  }
 }
 
 async function waitForDevServer(sandbox: Sandbox, port = 3000, maxWaitMs = 30_000): Promise<void> {
@@ -208,44 +288,57 @@ function formatForClaude(files: Record<string, string>): string {
     .join("\n\n");
 }
 
-function parsePatches(raw: string): Array<{ filePath: string; content: string }> {
-  // Try parsing the full response first
-  try {
-    return JSON.parse(raw);
-  } catch {
-    // Fall through
+interface ClaudeResponse {
+  patches: Array<{ filePath: string; content: string }>;
+  verificationSteps: string[];
+}
+
+function parseClaudeResponse(raw: string): ClaudeResponse {
+  // ── Primary: delimiter-based format (no JSON escaping needed) ──
+  const patchBlocks = [...raw.matchAll(/===PATCH:(.+?)===\n([\s\S]*?)===END_PATCH===/g)];
+  if (patchBlocks.length > 0) {
+    const patches = patchBlocks.map((m) => ({
+      filePath: m[1].trim(),
+      content: m[2],  // Raw file content, no JSON parsing needed
+    }));
+
+    // Extract verification steps
+    const stepsMatch = raw.match(/===VERIFICATION_STEPS===\n([\s\S]*?)===END_VERIFICATION_STEPS===/);
+    const verificationSteps = stepsMatch
+      ? stepsMatch[1].trim().split("\n")
+          .map((line) => line.replace(/^\d+\.\s*/, "").trim())
+          .filter(Boolean)
+      : [];
+
+    console.log(`   Parsed ${patches.length} patch(es) via delimiter format`);
+    return { patches, verificationSteps };
   }
 
-  // Try extracting a JSON array from surrounding text
-  const match = raw.match(/\[[\s\S]*\]/);
-  if (!match) throw new Error("Claude didn't return valid JSON patches");
-
-  try {
-    return JSON.parse(match[0]);
-  } catch {
-    // Claude sometimes returns file content with unescaped characters.
-    // Try a more lenient extraction: find individual patch objects
-    const patchRegex = /\{\s*"filePath"\s*:\s*"([^"]+)"\s*,\s*"content"\s*:\s*/g;
-    const patches: Array<{ filePath: string; content: string }> = [];
-    let m;
-    while ((m = patchRegex.exec(raw)) !== null) {
-      const filePath = m[1];
-      // Find the content string start (after the key)
-      const contentStart = raw.indexOf('"', m.index + m[0].length);
-      if (contentStart === -1) continue;
-      // Walk forward to find the closing quote, handling escaped quotes
-      let i = contentStart + 1;
-      while (i < raw.length) {
-        if (raw[i] === '\\') { i += 2; continue; }
-        if (raw[i] === '"') break;
-        i++;
+  // ── Fallback: JSON format (for backward compat if Claude ignores delimiters) ──
+  const tryParseJSON = (text: string): ClaudeResponse | null => {
+    try {
+      const parsed = JSON.parse(text);
+      if (parsed.patches && Array.isArray(parsed.patches)) {
+        return { patches: parsed.patches, verificationSteps: parsed.verificationSteps || [] };
       }
-      const content = JSON.parse(raw.slice(contentStart, i + 1));
-      patches.push({ filePath, content });
-    }
-    if (patches.length > 0) return patches;
-    throw new Error("Claude didn't return valid JSON patches");
+      if (Array.isArray(parsed)) {
+        return { patches: parsed, verificationSteps: [] };
+      }
+    } catch { /* fall through */ }
+    return null;
+  };
+
+  let result = tryParseJSON(raw);
+  if (result) return result;
+
+  // Try extracting JSON from surrounding text
+  const arrMatch = raw.match(/\[[\s\S]*\]/);
+  if (arrMatch) {
+    result = tryParseJSON(arrMatch[0]);
+    if (result) return result;
   }
+
+  throw new Error("Could not parse Claude response — no delimiter blocks or valid JSON found");
 }
 
 function parseBUResult(buResult: unknown): { pass: boolean; reason: string } | null {
@@ -289,7 +382,9 @@ async function openPR(
 ): Promise<string | null> {
   const pat = process.env.GITHUB_PAT!;
   const repoPath = process.env.PRODUCT_REPO!;
-  const branchName = `gripe/${item.type}-${item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 50)}`;
+  const slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").slice(0, 40);
+  const ts = Date.now().toString(36); // short unique suffix to avoid branch collisions
+  const branchName = `gripe/${item.type}-${slug}-${ts}`;
   // Sanitize user content for shell safety
   const safeTitle = item.title.replace(/[`$"\\]/g, "");
   const safeBody = item.body.replace(/[`$"\\]/g, "").slice(0, 200);
@@ -375,13 +470,33 @@ Requirements:
 - Fix the specific issue described in the bug report
 - Keep changes minimal — only modify what's needed to fix the bug
 - Do NOT do a full page navigation/reload — update React state only where applicable
-- Keep the existing visual style (light mode, clean, minimal)
+- Preserve the existing design language (spacing, fonts, layout) but DO change colors/themes if the bug requires it
 - Make sure the fix is testable by navigating the app in a browser
+- Do NOT modify package.json or add new dependencies. Use only what's already installed.
+- You MUST modify config files (tailwind.config.ts, next.config.ts, etc.) if the fix requires it.
+  For example, dark mode in Tailwind requires adding darkMode: "class" to tailwind.config.ts,
+  toggling a "dark" class on the <html> element, and using dark: variant classes on all colored elements.
 
-RESPOND WITH ONLY a JSON array of file patches. Each element:
-  { "filePath": "/home/daytona/app/...", "content": "full updated file content" }
+RESPOND using the EXACT format below. Use the delimiters exactly as shown.
+Do NOT use JSON for file contents — use the delimiter format instead.
 
-Return raw JSON only. No markdown fences, no explanation, no commentary.`;
+===PATCH:/home/daytona/app/path/to/file.tsx===
+(paste the FULL updated file content here — raw code, no escaping)
+===END_PATCH===
+
+===PATCH:/home/daytona/app/another/file.css===
+(full updated file content)
+===END_PATCH===
+
+===VERIFICATION_STEPS===
+1. A simple verification step, e.g. "Click the Login button and verify the dashboard loads"
+2. One more step if needed — keep it to 1-2 steps maximum
+===END_VERIFICATION_STEPS===
+
+Rules:
+- One ===PATCH:...=== block per changed file, containing the COMPLETE updated file content
+- 1-2 simple verification steps — do NOT ask to check every page, just verify the core fix works
+- No markdown fences, no explanation outside the delimiters, no commentary`;
 }
 
 function buildFeaturePrompt(item: PipelineItem, sourceCode: string): string {
@@ -408,45 +523,49 @@ Requirements:
 - Follow the existing code patterns and visual style
 - Make sure the feature is testable by navigating the app in a browser
 - Add any necessary UI elements (buttons, toggles, etc.)
+- Do NOT modify package.json or add new dependencies. Use only what's already installed.
+- You MUST modify config files (tailwind.config.ts, next.config.ts, etc.) if the feature requires it.
+  For example, dark mode in Tailwind requires adding darkMode: "class" to tailwind.config.ts,
+  toggling a "dark" class on the <html> element, and using dark: variant classes on ALL colored elements.
+- IMPORTANT: If the feature affects visual theming (e.g. dark mode), you MUST patch EVERY component
+  and page that has hardcoded colors — including dashboard components, cards, tables, navs, etc.
+  Do not just patch the homepage and layout — patch ALL files that contain bg-white, text-black,
+  border-gray, or any other hardcoded color class. Add dark: variants to every single one.
 
-RESPOND WITH ONLY a JSON array of file patches. Each element:
-  { "filePath": "/home/daytona/app/...", "content": "full updated file content" }
+RESPOND using the EXACT format below. Use the delimiters exactly as shown.
+Do NOT use JSON for file contents — use the delimiter format instead.
 
-Return raw JSON only. No markdown fences, no explanation, no commentary.`;
+===PATCH:/home/daytona/app/path/to/file.tsx===
+(paste the FULL updated file content here — raw code, no escaping)
+===END_PATCH===
+
+===PATCH:/home/daytona/app/another/file.css===
+(full updated file content)
+===END_PATCH===
+
+===VERIFICATION_STEPS===
+1. A simple verification step, e.g. "Click the Toggle theme button and verify the background changes"
+2. One more step if needed — keep it to 1-2 steps maximum, focused on the main page only
+===END_VERIFICATION_STEPS===
+
+Rules:
+- One ===PATCH:...=== block per changed file, containing the COMPLETE updated file content
+- 1-2 simple verification steps — do NOT ask to check every page, just verify it works on ONE page
+- No markdown fences, no explanation outside the delimiters, no commentary`;
 }
 
-function buildBugVerificationPrompt(item: PipelineItem, previewUrl: string): string {
-  return `Navigate to ${previewUrl}.
-You should see a login page for "ShopWave".
+function buildVerificationPrompt(
+  item: PipelineItem,
+  previewUrl: string,
+  verificationSteps: string[],
+): string {
+  const whatToVerify = verificationSteps.length > 0
+    ? verificationSteps.join(". Then ")
+    : item.type === "bug"
+      ? `verify that this bug is fixed: "${item.summary}"`
+      : `verify this new feature works: "${item.summary}"`;
 
-Step 1: Log in with email "demo@shop.com" and password "password123".
-        If the login button doesn't work, try navigating directly to ${previewUrl}/login
-Step 2: After login you should be on the dashboard.
-Step 3: Look for evidence that the following bug has been FIXED:
-        Bug: "${item.summary}"
-        Original complaint: "${item.body}"
-Step 4: Interact with the relevant UI elements to verify the fix works.
-Step 5: Confirm the fix is working properly.
-
-Return your final answer as ONLY a JSON object (no other text):
-{ "pass": true or false, "reason": "short explanation of what you found" }`;
-}
-
-function buildFeatureVerificationPrompt(item: PipelineItem, previewUrl: string): string {
-  return `Navigate to ${previewUrl}.
-You should see a login page for "ShopWave".
-
-Step 1: Log in with email "demo@shop.com" and password "password123".
-        If the login button doesn't work, try navigating directly to ${previewUrl}/login
-Step 2: After login you should be on the dashboard.
-Step 3: Look for the following NEW FEATURE that was just added:
-        Feature: "${item.summary}"
-        Original request: "${item.body}"
-Step 4: Interact with the feature to verify it works as described.
-Step 5: Confirm the feature is present and functional.
-
-Return your final answer as ONLY a JSON object (no other text):
-{ "pass": true or false, "reason": "short explanation of what you found" }`;
+  return `Go to ${previewUrl}/login, log in with email "demo@shop.com" and password "password123", then ${whatToVerify}. If the core feature works on ANY page (e.g. background visibly changes), that is a PASS — it does not need to be perfect on every page. Only FAIL if the feature has zero visible effect anywhere. Do not navigate away from the app or re-login. Return ONLY: { "pass": true/false, "reason": "one sentence describing what you actually saw" }`;
 }
 
 // ── Process a single item ────────────────────────────────────────────────────
@@ -493,26 +612,34 @@ async function processItem(
     await updateItemStatus(item._id, "building", { statusMessage: "Installing dependencies..." });
     await sandbox.process.executeCommand("cd /home/daytona/app && npm install");
 
-    console.log("4. Starting dev server...");
+    console.log("4. Starting dev server (non-blocking)...");
     await sandbox.process.createSession("dev-server");
     await sandbox.process.executeSessionCommand("dev-server", {
       command: "cd /home/daytona/app && npm run dev",
       runAsync: true,
     });
-    await waitForDevServer(sandbox);
+    // Don't await dev server here — do file listing + Claude in parallel
   }
 
   try {
-    // Get preview URL
+    // Get preview URL (doesn't need server to be ready)
     const preview = await sandbox.getPreviewLink(3000);
     console.log(`   Preview: ${preview.url}\n`);
 
-    // 6. Read source files
-    console.log("A. Reading source files...");
-    const files = await readSourceFiles(sandbox);
+    // A. List files + filter with Haiku + read files + Claude — all BEFORE dev server needed
+    console.log("A. Listing source files...");
+    const allPaths = await listSourceFiles(sandbox);
+    console.log(`   Found ${allPaths.length} source files`);
+
+    console.log("A2. Filtering relevant files (Haiku)...");
+    const relevantPaths = await filterRelevantFiles(allPaths, item);
+    console.log(`   Selected ${relevantPaths.length}/${allPaths.length} files`);
+
+    console.log("A3. Reading selected files...");
+    const files = await readSelectedFiles(sandbox, relevantPaths);
     const sourceCode = formatForClaude(files);
 
-    // 7. Claude writes the fix/feature
+    // B. Claude writes the fix/feature (dev server still booting — that's fine)
     console.log("B. Sending to Claude...");
     await updateItemStatus(item._id, "building", { statusMessage: "Claude writing code..." });
     const prompt = item.type === "bug"
@@ -521,36 +648,51 @@ async function processItem(
 
     const response = await anthropic.messages.create({
       model: "us.anthropic.claude-sonnet-4-20250514-v1:0",
-      max_tokens: 8192,
+      max_tokens: 16384,
       messages: [{ role: "user", content: prompt }],
     });
 
     const raw = response.content[0].type === "text" ? response.content[0].text : "";
-    const patches = parsePatches(raw);
+    const { patches, verificationSteps } = parseClaudeResponse(raw);
+    if (verificationSteps.length > 0) {
+      console.log(`   Claude provided ${verificationSteps.length} verification step(s)`);
+    }
 
-    // 8. Apply patches
-    console.log(`C. Applying ${patches.length} patch(es)...`);
+    // C. Now ensure dev server is up before applying patches
+    console.log("C. Waiting for dev server...");
+    await waitForDevServer(sandbox);
+
+    // D. Apply patches
+    console.log(`D. Applying ${patches.length} patch(es)...`);
     for (const p of patches) {
       await sandbox.fs.uploadFile(Buffer.from(p.content), p.filePath);
       console.log(`   Patched: ${p.filePath}`);
     }
 
-    // 9. Wait for hot reload
-    console.log("D. Waiting for hot reload (~3s)...");
+    // E. Wait for hot reload
+    console.log("E. Waiting for hot reload (~3s)...");
     await new Promise((r) => setTimeout(r, 3_000));
 
-    // 10. Verify with Browser Use
-    console.log("E. Verifying with Browser Use...\n");
+    // F. Verify with Browser Use
+    console.log("F. Verifying with Browser Use...\n");
     await updateItemStatus(item._id, "verifying", { statusMessage: "Browser Use verifying..." });
     await updateRunStep(runId, "BUILD", "done", "VERIFY");
     await updateRunStep(runId, "VERIFY", "running");
 
-    const verifyPrompt = item.type === "bug"
-      ? buildBugVerificationPrompt(item, preview.url)
-      : buildFeatureVerificationPrompt(item, preview.url);
+    const verifyPrompt = buildVerificationPrompt(item, preview.url, verificationSteps);
 
-    const buResult = await bu.run(verifyPrompt);
+    const buResult = await bu.run(verifyPrompt, {
+      maxSteps: 10,
+      timeout: 300_000,
+    });
     console.log("   Raw BU result:", JSON.stringify(buResult, null, 2));
+
+    // Extract the last screenshot from BU steps
+    const buSteps = (buResult as any).steps ?? [];
+    const screenshotUrl: string | undefined = [...buSteps]
+      .reverse()
+      .find((s: any) => s.screenshotUrl)?.screenshotUrl;
+    if (screenshotUrl) console.log(`   Screenshot: ${screenshotUrl}`);
 
     const verification = parseBUResult(buResult);
     if (verification) {
@@ -579,17 +721,19 @@ async function processItem(
           detail: verification.reason,
           statusMessage: prUrl ? "PR opened" : "Verified but PR failed",
           traceUrl,
+          screenshotUrl,
         });
 
         await updateRunStep(runId, "DEPLOY", "done");
         return true;
       } else {
         console.log(`\n   VERIFICATION FAILED — ${verification.reason}\n`);
-        await updateItemStatus(item._id, "done", {
+        await updateItemStatus(item._id, "failed", {
           verified: false,
           detail: verification.reason,
           statusMessage: "Verification failed",
           traceUrl,
+          screenshotUrl,
         });
         return false;
       }
@@ -598,11 +742,12 @@ async function processItem(
       const lmnrProjectId2 = process.env.LMNR_PROJECT_ID || "";
       const traceUrl = traceId && lmnrProjectId2 ? `https://laminar.sh/project/${lmnrProjectId2}/traces?traceId=${traceId}` : undefined;
       console.log("\n   Could not parse BU output\n");
-      await updateItemStatus(item._id, "done", {
+      await updateItemStatus(item._id, "failed", {
         verified: false,
         detail: "Could not parse Browser Use verification output",
         statusMessage: "Verification parse error",
         traceUrl,
+        screenshotUrl,
       });
       return false;
     }
@@ -625,24 +770,12 @@ async function main() {
   console.log("  GRIPE Orchestrator — BUILD / VERIFY / DEPLOY");
   console.log("=".repeat(50) + "\n");
 
-  // 1. Start pre-warming a sandbox IMMEDIATELY (runs during Python pipeline scraping)
-  console.log("Starting sandbox pre-warm (runs in parallel with Python pipeline)...\n");
-  const warmSandboxPromise = prewarmSandbox().catch((err) => {
-    console.error("[PREWARM] Failed:", (err as Error).message);
-    return null;
-  });
-
-  // 2. Poll Convex for detected items (Python pipeline will push them when done)
+  // 1. Poll Convex for detected items (Python pipeline will push them when done)
   console.log("Polling Convex for detected items...");
   const items = await pollForItems(300); // 5 min timeout
 
   if (items.length === 0) {
-    console.log("No items found after polling. Cleaning up...");
-    const warmSandbox = await warmSandboxPromise;
-    if (warmSandbox) {
-      await warmSandbox.delete();
-      console.log("Pre-warmed sandbox deleted.");
-    }
+    console.log("No items found after polling. Exiting.");
     return;
   }
 
@@ -651,10 +784,16 @@ async function main() {
     console.log(`  - [${item.type.toUpperCase()}] ${item.title} (${item.severity})`);
   }
 
-  // 3. Get the pre-warmed sandbox (should be ready by now since scraping takes ~50s)
-  const warmSandbox = await warmSandboxPromise;
+  // 2. Prewarm sandboxes for ALL items in parallel
+  console.log(`\nPrewarming ${items.length} sandbox(es) in parallel...`);
+  const warmSandboxPromises = items.map((_, i) =>
+    prewarmSandbox().catch((err) => {
+      console.error(`[PREWARM ${i}] Failed:`, (err as Error).message);
+      return null;
+    })
+  );
 
-  // 4. Get or create a pipeline run
+  // 4. Get or create a pipeline run (runs while sandboxes prewarm)
   const runResp = await fetch(`${CONVEX_SITE_URL}/api/runs/current`);
   let runId: string;
   if (runResp.ok) {
@@ -670,37 +809,58 @@ async function main() {
   // Mark BUILD step as running
   await updateRunStep(runId, "BUILD", "running");
 
-  // 5. Process items in PARALLEL
-  //    First item gets the pre-warmed sandbox, others create their own concurrently
-  const results = await Promise.allSettled(
-    items.map((item, i) => {
-      const sandbox = i === 0 ? warmSandbox : null;
-      return processItem(item, runId, sandbox).catch(async (err) => {
-        console.error(`\nFailed to process "${item.title}":`, (err as Error).message);
-        await updateItemStatus(item._id, "done", {
-          verified: false,
-          detail: `Pipeline error: ${(err as Error).message}`,
-          statusMessage: "Pipeline error",
+  // Await all prewarmed sandboxes
+  const warmSandboxes = await Promise.all(warmSandboxPromises);
+  console.log(`   ${warmSandboxes.filter(Boolean).length}/${items.length} sandboxes ready\n`);
+
+  let successCount = 0;
+  try {
+    // 5. Process items in PARALLEL — each item gets its own prewarmed sandbox
+    const results = await Promise.allSettled(
+      items.map((item, i) => {
+        const sandbox = warmSandboxes[i];
+        return processItem(item, runId, sandbox).catch(async (err) => {
+          console.error(`\nFailed to process "${item.title}":`, (err as Error).message);
+          await updateItemStatus(item._id, "failed", {
+            verified: false,
+            detail: `Pipeline error: ${(err as Error).message}`,
+            statusMessage: "Pipeline error",
+          });
+          return false;
         });
-        return false;
-      });
-    })
-  );
+      })
+    );
 
-  const successCount = results.filter(
-    (r) => r.status === "fulfilled" && r.value === true
-  ).length;
-
-  // 6. Complete the run
-  await updateRunStep(runId, "POST", "done");
-  await completeRun(runId, successCount);
+    successCount = results.filter(
+      (r) => r.status === "fulfilled" && r.value === true
+    ).length;
+  } finally {
+    // ALWAYS mark the run as complete, even if processing throws
+    try {
+      await updateRunStep(runId, "POST", "done");
+      await completeRun(runId, successCount);
+    } catch (e) {
+      console.error("Failed to complete run in Convex:", (e as Error).message);
+    }
+  }
 
   console.log("\n" + "=".repeat(50));
   console.log(`  Done! ${successCount}/${items.length} items processed successfully`);
   console.log("=".repeat(50) + "\n");
 }
 
-main().catch((err) => {
+main().catch(async (err) => {
   console.error("\n Pipeline failed:", err?.message ?? err);
+  // Try to complete any active run so the UI doesn't get stuck
+  try {
+    const resp = await fetch(`${CONVEX_SITE_URL}/api/runs/current`);
+    if (resp.ok) {
+      const run = (await resp.json()) as { _id?: string };
+      if (run._id) {
+        await completeRun(run._id, 0);
+        console.log(" Marked stale run as complete.");
+      }
+    }
+  } catch { /* best effort */ }
   process.exit(1);
 });

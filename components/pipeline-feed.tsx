@@ -14,6 +14,7 @@ interface RunCard {
   traceUrl: string
   detail: string
   files: string[]
+  screenshotUrl: string
   isLatest?: boolean
   status?: string
 }
@@ -89,6 +90,10 @@ function RunCardComponent({ run }: { run: RunCard }) {
             <span className="font-mono text-[11px] text-gripe-green">
               VERIFIED
             </span>
+          ) : run.status === "failed" ? (
+            <span className="font-mono text-[11px] text-gripe-accent">
+              FAILED
+            </span>
           ) : (
             <span className="font-mono text-[11px] text-gripe-yellow">
               UNVERIFIED
@@ -124,11 +129,25 @@ function RunCardComponent({ run }: { run: RunCard }) {
               </li>
             ))}
           </ul>
-          <div className="flex h-20 items-center justify-center border border-gripe-border bg-gripe-bg">
-            <span className="font-mono text-[10px] uppercase tracking-wider text-gripe-muted">
-              Verification Screenshot
-            </span>
-          </div>
+          {run.screenshotUrl ? (
+            <div className="overflow-hidden border border-gripe-border">
+              <p className="mb-1 font-mono text-[10px] uppercase tracking-wider text-gripe-muted">
+                Verification Screenshot
+              </p>
+              <img
+                src={run.screenshotUrl}
+                alt="Browser Use verification screenshot"
+                className="w-full"
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <div className="flex h-20 items-center justify-center border border-gripe-border bg-gripe-bg">
+              <span className="font-mono text-[10px] uppercase tracking-wider text-gripe-muted">
+                No screenshot available
+              </span>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -149,6 +168,7 @@ export function PipelineFeed() {
       traceUrl: item.traceUrl || "",
       detail: item.detail || item.statusMessage || `Status: ${item.status}`,
       files: item.filesChanged || [],
+      screenshotUrl: item.screenshotUrl || "",
       isLatest: i === 0,
       status: item.status,
     })) || []
@@ -170,7 +190,7 @@ export function PipelineFeed() {
           <RunCardComponent key={run.id} run={run} />
         ))}
         {runs.length > 0 && (
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-gripe-bg to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-gripe-bg to-transparent" />
         )}
       </div>
     </section>
