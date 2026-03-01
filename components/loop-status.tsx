@@ -17,12 +17,21 @@ export function LoopStatus() {
   const currentRun = useQuery(api.runs.getCurrent)
   const steps = currentRun?.steps || []
   const isRunning = currentRun?.status === "running"
+  const isStale = currentRun?.status === "stale"
 
   return (
     <section className="flex flex-col gap-4">
       <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-gripe-muted">
         Loop Status
       </h2>
+
+      {isStale && (
+        <div className="rounded border border-gripe-accent/30 bg-gripe-accent/10 px-3 py-2">
+          <p className="font-mono text-[11px] text-gripe-accent">
+            Previous run timed out. You can start a new one.
+          </p>
+        </div>
+      )}
 
       {/* Steps */}
       <div className="flex flex-col gap-0">
@@ -39,13 +48,13 @@ export function LoopStatus() {
                 step.status === "pending"
                   ? "text-gripe-muted/40"
                   : step.status === "running"
-                  ? "text-gripe-yellow"
+                  ? isStale ? "text-gripe-accent/60" : "text-gripe-yellow"
                   : "text-gripe-text"
               }`}
             >
               {step.name}
             </span>
-            <StatusDot status={step.status} />
+            <StatusDot status={isStale && step.status === "running" ? "stale" : step.status} />
           </div>
         ))}
       </div>

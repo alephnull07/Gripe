@@ -1,5 +1,6 @@
 import asyncio
 import json
+import re
 
 from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage
@@ -8,9 +9,44 @@ from classifier import ClassifiedPost
 
 
 llm = ChatBedrockConverse(
-    model="us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    model="us.anthropic.claude-3-5-haiku-20241022-v1:0",
     region_name="us-west-2",
 )
+
+
+def extract_json(text: str) -> dict:
+    """Extract a JSON object from text that may contain surrounding prose."""
+    # Strip markdown code fences
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+        text = text.rsplit("```", 1)[0].strip()
+
+    # Try parsing the whole thing first
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+
+    # Find the first { ... } block in the text
+    match = re.search(r'\{[^{}]*\}', text)
+    if match:
+        try:
+            return json.loads(match.group())
+        except json.JSONDecodeError:
+            pass
+
+    raise json.JSONDecodeError("No valid JSON object found", text, 0)
+
+
+def extract_raw_text(content) -> str:
+    """Extract raw text from a Bedrock response content (string or list of blocks)."""
+    if isinstance(content, list):
+        return "".join(
+            block.get("text", "") if isinstance(block, dict) else str(block)
+            for block in content
+        )
+    return str(content)
 
 
 # ---------------------------------------------------------------------------
@@ -35,18 +71,18 @@ Respond with ONLY valid JSON, no markdown backticks:
 
     try:
         response = await llm.ainvoke([HumanMessage(content=prompt)])
-        raw = response.content.strip()
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            raw = raw.rsplit("```", 1)[0].strip()
-        data = json.loads(raw)
+        raw = extract_raw_text(response.content).strip()
+        if not raw:
+            print(f"    Empty response for bug '{post.original.title}', accepting by default")
+            return True
+        data = extract_json(raw)
         accepted = data.get("is_real_bug", False)
         if not accepted:
             print(f"    Bug rejected: {post.original.title} -- {data.get('reason', '')}")
         return accepted
     except Exception as e:
         print(f"    Error validating bug '{post.original.title}': {e}")
-        return False
+        return True  # Accept on error rather than silently dropping items
 
 
 async def validate_bugs(bugs: list[ClassifiedPost]) -> list[ClassifiedPost]:
@@ -150,18 +186,18 @@ Respond with ONLY valid JSON, no markdown backticks:
 
     try:
         response = await llm.ainvoke([HumanMessage(content=prompt)])
-        raw = response.content.strip()
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            raw = raw.rsplit("```", 1)[0].strip()
-        data = json.loads(raw)
+        raw = extract_raw_text(response.content).strip()
+        if not raw:
+            print(f"    Empty response for feature '{post.summary}', accepting by default")
+            return True
+        data = extract_json(raw)
         viable = data.get("viable", False)
         if not viable:
             print(f"    Feature rejected: {post.original.title} -- {data.get('reason', '')}")
         return viable
     except Exception as e:
         print(f"    Error checking viability for '{post.summary}': {e}")
-        return False
+        return True  # Accept on error rather than silently dropping items
 
 
 async def check_viability(features: list[ClassifiedPost]) -> list[ClassifiedPost]:

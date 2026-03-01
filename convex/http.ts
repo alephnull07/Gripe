@@ -6,7 +6,7 @@ const http = httpRouter();
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "POST, PATCH, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, PATCH, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
@@ -20,6 +20,23 @@ function corsResponse(data: unknown, status = 200) {
 function corsOptions() {
   return new Response(null, { status: 204, headers: corsHeaders });
 }
+
+// GET /api/items?status=detected
+http.route({
+  path: "/api/items",
+  method: "GET",
+  handler: httpAction(async (ctx, request) => {
+    const url = new URL(request.url);
+    const status = url.searchParams.get("status");
+    let items;
+    if (status) {
+      items = await ctx.runQuery(api.pipeline.getByStatus, { status });
+    } else {
+      items = await ctx.runQuery(api.pipeline.getAll);
+    }
+    return corsResponse({ items });
+  }),
+});
 
 // POST /api/items
 http.route({
@@ -53,6 +70,22 @@ http.route({
 
 http.route({
   path: "/api/items/status",
+  method: "OPTIONS",
+  handler: httpAction(async () => corsOptions()),
+});
+
+// GET /api/runs/current
+http.route({
+  path: "/api/runs/current",
+  method: "GET",
+  handler: httpAction(async (ctx) => {
+    const run = await ctx.runQuery(api.runs.getCurrent);
+    return corsResponse(run);
+  }),
+});
+
+http.route({
+  path: "/api/runs/current",
   method: "OPTIONS",
   handler: httpAction(async () => corsOptions()),
 });

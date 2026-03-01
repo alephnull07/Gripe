@@ -14,7 +14,18 @@ const DEFAULT_STEPS = [
 export const getCurrent = query({
   handler: async (ctx) => {
     const run = await ctx.db.query("pipelineRuns").order("desc").first();
-    return run || { status: "idle", steps: DEFAULT_STEPS, itemsProcessed: 0 };
+    if (!run) {
+      return { status: "idle", steps: DEFAULT_STEPS, itemsProcessed: 0 };
+    }
+    // If a run has been "running" for more than 10 minutes, treat it as stale/failed
+    if (
+      run.status === "running" &&
+      run.startedAt &&
+      Date.now() - run.startedAt > 10 * 60 * 1000
+    ) {
+      return { ...run, status: "stale" };
+    }
+    return run;
   },
 });
 

@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GRIPE — Autonomous Product Intelligence Loop</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f0ede8;
+      --ink: #0d0d0d;
+      --card: #ffffff;
+      --accent: #ff3b00;
+      --green: #00b87a;
+      --blue: #1a56ff;
+      --yellow: #f5c518;
+      --purple: #7c3aed;
+      --muted: #888580;
+      --border: #d8d4ce;
+      --dark: #1a1814;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #c8c4be;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    @media print {
+      html, body { margin: 0; padding: 0; background: none; }
+      .page { margin: 0; box-shadow: none; }
+      @page { size: A4 landscape; margin: 0; }
+    }
+
+    .page {
+      width: 297mm;
+      height: 210mm;
+      background: var(--bg);
+      margin: 8mm auto;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══ TOP BAR ═══ */
+    .topbar {
+      background: var(--ink);
+      display: flex;
+      align-items: stretch;
+      flex-shrink: 0;
+    }
+
+    .topbar-brand {
+      background: var(--accent);
+      padding: 5mm 8mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5mm;
+    }
+
+    .brand-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 32pt;
+      color: #fff;
+      letter-spacing: -.02em;
+      line-height: 1;
+    }
+
+    .brand-name sup {
+      font-family: 'Space Mono', monospace;
+      font-size: 7pt;
+      font-weight: 400;
+      letter-spacing: .1em;
+      vertical-align: super;
+      opacity: .7;
+    }
+
+    .brand-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+    }
+
+    .topbar-tagline {
+      flex: 1;
+      padding: 4mm 7mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-left: 1px solid #2a2a2a;
+    }
+
+    .tagline-main {
+      font-family: 'Syne', sans-serif;
+      font-size: 11pt;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -.01em;
+      line-height: 1.2;
+    }
+
+    .tagline-main em { color: var(--accent); font-style: normal; }
+    .tagline-main .eg { color: var(--green); font-style: normal; }
+
+    .tagline-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      color: #666;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      margin-top: 1.5mm;
+    }
+
+    .topbar-stats {
+      display: flex;
+      align-items: stretch;
+      border-left: 1px solid #2a2a2a;
+    }
+
+    .stat {
+      padding: 3.5mm 6mm;
+      border-right: 1px solid #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5mm;
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 18pt;
+      font-weight: 800;
+      color: var(--yellow);
+      line-height: 1;
+    }
+
+    .stat-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    /* ═══ MAIN BODY ═══ */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 52mm;
+      overflow: hidden;
+    }
+
+    /* ═══ PIPELINE STEPS ═══ */
+    .step {
+      padding: 4mm 5mm;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+      overflow: hidden;
+      background: var(--card);
+      position: relative;
+    }
+
+    .step:nth-child(even) { background: #fafaf8; }
+
+    .step-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 2mm;
+    }
+
+    .step-index {
+      font-family: 'Space Mono', monospace;
+      font-size: 6pt;
+      font-weight: 700;
+      color: var(--accent);
+      background: #fff0ed;
+      border: 1px solid #ffccc2;
+      padding: 0.8mm 2mm;
+      letter-spacing: .08em;
+    }
+
+    .step-index.green {
+      color: var(--green);
+      background: #e8faf3;
+      border-color: #a7f3d0;
+    }
+
+    .step-platform {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.4;
+    }
+
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 11.5pt;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+      letter-spacing: -.01em;
+    }
+
+    .step-title em { font-style: normal; color: var(--accent); }
+    .step-title .eg { font-style: normal; color: var(--green); }
+
+    .step-body {
+      font-size: 6.5pt;
+      line-height: 1.5;
+      color: #3a3830;
+      flex: 1;
+    }
+
+    .step-body strong { font-weight: 600; color: var(--ink); }
+
+    .branch-pill {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 0.6mm 2mm;
+      margin-bottom: 1mm;
+    }
+
+    .branch-bug { background: #fff0ed; color: var(--accent); border: 1px solid #ffccc2; }
+    .branch-feat { background: #e8faf3; color: var(--green); border: 1px solid #a7f3d0; }
+
+    .output-box {
+      background: var(--ink);
+      padding: 2mm 2.5mm;
+      margin-top: auto;
+    }
+
+    .output-box-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 1mm;
+    }
+
+    .output-box-txt {
+      font-family: 'Space Mono', monospace;
+      font-size: 6pt;
+      line-height: 1.4;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    .output-box-txt strong { color: #fff; font-style: normal; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5mm;
+      margin-top: 1.5mm;
+    }
+
+    .chip {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 0.8mm 1.8mm;
+      font-weight: 700;
+    }
+
+    .chip-r { background: #fff0ed; color: var(--accent); border: 1px solid #ffccc2; }
+    .chip-b { background: #eef2ff; color: var(--blue); border: 1px solid #c7d2fe; }
+    .chip-g { background: #e8faf3; color: var(--green); border: 1px solid #a7f3d0; }
+    .chip-k { background: #f3f0ea; color: #555; border: 1px solid var(--border); }
+
+    .step::after {
+      content: '→';
+      position: absolute;
+      right: -3.5mm;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10pt;
+      color: var(--accent);
+      font-weight: 700;
+      z-index: 2;
+      background: var(--bg);
+      padding: 0.5mm 0;
+    }
+
+    /* ═══ DASHBOARD PANEL ═══ */
+    .dashboard {
+      background: var(--dark);
+      border-left: 3px solid var(--green);
+      padding: 4mm 4.5mm;
+      display: flex;
+      flex-direction: column;
+      gap: 2mm;
+      overflow: hidden;
+    }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #2a2a2a;
+      padding-bottom: 1.5mm;
+    }
+
+    .dash-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 8pt;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .dash-live {
+      display: flex;
+      align-items: center;
+      gap: 1.5mm;
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      color: var(--green);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .live-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+
+    .dash-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5mm;
+    }
+
+    .dash-metric {
+      background: #0d0d0d;
+      border: 1px solid #1e1e1e;
+      padding: 1.5mm 2mm;
+    }
+
+    .dash-metric-val {
+      font-family: 'Syne', sans-serif;
+      font-size: 14pt;
+      font-weight: 800;
+      color: var(--yellow);
+      line-height: 1;
+    }
+
+    .dash-metric-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 4.5pt;
+      color: #555;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 0.5mm;
+    }
+
+    .dash-list {
+      background: #0d0d0d;
+      border: 1px solid #1e1e1e;
+      padding: 2mm;
+      flex: 1;
+    }
+
+    .dfl-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #444;
+      margin-bottom: 1.5mm;
+    }
+
+    .dfl-item {
+      display: grid;
+      grid-template-columns: 3mm 1fr auto;
+      gap: 1.5mm;
+      align-items: center;
+      padding: 1mm 0;
+      border-bottom: 1px solid #181818;
+    }
+
+    .dfl-item:last-child { border-bottom: none; }
+
+    .dfl-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--green); }
+    .dfl-dot.bug { background: var(--accent); }
+
+    .dfl-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      color: #aaa;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .dfl-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .dfl-tag.feat { color: var(--green); }
+    .dfl-tag.bug { color: var(--accent); }
+
+    .dash-bar {
+      background: #0d0d0d;
+      border: 1px solid #1e1e1e;
+      padding: 2mm;
+    }
+
+    .drb-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      margin-bottom: 1mm;
+    }
+
+    .drb-bar-row:last-child { margin-bottom: 0; }
+
+    .drb-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      color: #666;
+      width: 16mm;
+      flex-shrink: 0;
+    }
+
+    .drb-track { flex: 1; height: 3px; background: #1e1e1e; }
+    .drb-fill { height: 100%; background: var(--accent); }
+    .drb-fill.green { background: var(--green); }
+
+    .drb-val {
+      font-family: 'Space Mono', monospace;
+      font-size: 5pt;
+      color: var(--accent);
+      width: 8mm;
+      text-align: right;
+    }
+
+    /* ═══ BOTTOM BAR ═══ */
+    .bottombar {
+      background: var(--ink);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      padding: 2.5mm 7mm 2.5mm 0;
+      border-top: 2px solid var(--accent);
+      flex-shrink: 0;
+    }
+
+    .bb-left {
+      background: var(--green);
+      padding: 2.5mm 7mm;
+      margin-right: 6mm;
+    }
+
+    .bb-left-txt {
+      font-family: 'Syne', sans-serif;
+      font-size: 7.5pt;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .bb-recursive {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      color: #666;
+      letter-spacing: .08em;
+      line-height: 1.5;
+    }
+
+    .bb-recursive strong { color: #aaa; }
+
+    .bb-sponsors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5mm;
+      align-items: center;
+    }
+
+    .sp {
+      font-family: 'Space Mono', monospace;
+      font-size: 4.5pt;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 0.8mm 1.8mm;
+      background: #1a1a1a;
+      color: #666;
+      border: 1px solid #252525;
+    }
+
+    .sp.on { background: #1a1f1a; color: var(--green); border-color: #1e3a2a; }
+
+    /* ═══════════════════════════════════
+       PAGE 2 — FLOWCHART
+    ═══════════════════════════════════ */
+    .page2 { background: #0a0a0a; }
+
+    .p2-topbar {
+      background: #0d0d0d;
+      border-bottom: 2px solid var(--accent);
+      padding: 3.5mm 8mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .p2-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16pt;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -.01em;
+    }
+
+    .p2-title span { color: var(--accent); }
+
+    .p2-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 6pt;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #d8d8d8;
+      margin-top: 1mm;
+    }
+
+    .p2-body {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5mm 10mm 3mm;
+      overflow: hidden;
+    }
+
+    .p2-footer {
+      background: #0d0d0d;
+      border-top: 1px solid #1e1e1e;
+      padding: 2.5mm 8mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .p2-footer-txt {
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      color: #cfcfcf;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .p2-legend {
+      display: flex;
+      gap: 6mm;
+      align-items: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 2mm;
+      font-family: 'Space Mono', monospace;
+      font-size: 5.5pt;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════ PAGE 1 ════════════════ -->
+<div class="page">
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <div class="brand-name">GRIPE<sup>™</sup></div>
+      <div class="brand-tag">v0.1 · Browser Use Hackathon @ YC</div>
+    </div>
+    <div class="topbar-tagline">
+      <div class="tagline-main">A product's own users are filing its <em>bug reports</em> and writing its <eg>product roadmap</eg> — on social channels.<br>The agent reads, classifies, builds, and responds. Automatically.</div>
+      <div class="tagline-sub">Scrape Reddit + X · Classify: bug vs. feature · Build fix · Branch: post publicly OR launch ad · Brief team · Zero humans</div>
+    </div>
+    <div class="topbar-stats">
+      <div class="stat">
+        <div class="stat-val">2</div>
+        <div class="stat-lbl">Output<br>Paths</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">0</div>
+        <div class="stat-lbl">Humans<br>Required</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">∞</div>
+        <div class="stat-lbl">Recursion<br>Depth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- STEP 1 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-index">STEP 01</div>
+        <div class="step-platform">Subreddit + Community<br>X / Twitter</div>
+      </div>
+      <div class="step-title">Read the<br><em>Community</em></div>
+      <div class="step-body">
+        <strong>Browser Use</strong> navigates the target subreddit and brand X mentions, reading posts sorted by "new" and "top." Full comment threads — the signal is often in the replies, not the post title.<br><br>
+        <strong>Convex</strong> stores every post with a vector embedding. Semantic clustering groups "checkout keeps timing out" with "payment page crashes" even though the words differ, ranked by upvote mass and post frequency.<br><br>
+        A single post with 1 upvote is noise. A cluster of 40 posts is a signal.
+      </div>
+      <div class="output-box">
+        <div class="output-box-lbl">Raw Signal</div>
+        <div class="output-box-txt">Ranked clusters of <strong>bugs and feature requests</strong> from r/hellofresh + X · ready for classification</div>
+      </div>
+      <div class="chips">
+        <span class="chip chip-r">Browser Use</span>
+        <span class="chip chip-b">Convex</span>
+        <span class="chip chip-k">Laminar</span>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-index">STEP 02</div>
+        <div class="step-platform">Classification<br>Claude</div>
+      </div>
+      <div class="step-title">Bug or<br><em>Feature?</em></div>
+      <div class="step-body">
+        <strong>Claude</strong> reads the top cluster and classifies it. The label determines the entire downstream path.<br><br>
+        <span class="branch-pill branch-bug">🐛 Bug Report</span><br>
+        Something <em>broken</em> that should work. "Checkout crashes on mobile," "cancellation email never arrives." Fix it and tell the community publicly.<br><br>
+        <span class="branch-pill branch-feat">✦ Feature Request</span><br>
+        Something users <em>want that doesn't exist yet.</em> "Wish I could skip a week without calling," "no dark mode." Build it, then run an ad to turn the demand into acquisition.
+      </div>
+      <div class="output-box">
+        <div class="output-box-lbl">Decision</div>
+        <div class="output-box-txt">Classification + rationale stored in <strong>Convex</strong> · routes to correct downstream branch</div>
+      </div>
+      <div class="chips">
+        <span class="chip chip-k">Anthropic</span>
+        <span class="chip chip-b">Convex</span>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-index">STEP 03</div>
+        <div class="step-platform">Daytona<br>Sandbox</div>
+      </div>
+      <div class="step-title">Build the<br><em>Fix</em></div>
+      <div class="step-body">
+        Same process regardless of type — bug or feature.<br><br>
+        <strong>Daytona</strong> spins up the target product codebase sandbox in &lt;90ms with full filesystem, Git, and LSP. <strong>Claude</strong> writes the implementation with full repo awareness. <strong>Browser Use</strong> then navigates the locally running app inside the sandbox and clicks through the affected flow — verifying it actually works, not just compiles.<br><br>
+        Agent opens a PR. <strong>Cubic</strong> reviews the diff repo-wide for cross-file issues and policy violations. Cubic fails → Claude revises in Daytona. Cubic passes → merge.
+      </div>
+      <div class="output-box">
+        <div class="output-box-lbl">Output</div>
+        <div class="output-box-txt">UI <strong>click-tested by Browser Use</strong> in sandbox · PR opened · <strong>Cubic-approved</strong> · merged</div>
+      </div>
+      <div class="chips">
+        <span class="chip chip-k">Daytona</span>
+        <span class="chip chip-k">Anthropic</span>
+        <span class="chip chip-r">Browser Use</span>
+        <span class="chip chip-k">Cubic</span>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-index green">STEP 04</div>
+        <div class="step-platform">Branching<br>Output</div>
+      </div>
+      <div class="step-title">Post or<br><eg>Advertise</eg></div>
+      <div class="step-body">
+        <span class="branch-pill branch-bug">🐛 If Bug</span><br>
+        <strong>Browser Use</strong> replies to the original Reddit thread: <em>"This has been fixed — update your app."</em> Then posts a standalone announcement in the same subreddit community. No ad spend — the community that surfaced it hears about it first.<br><br>
+        <span class="branch-pill branch-feat">✦ If Feature</span><br>
+        <strong>Mosaic</strong> generates a motion graphic from screenshots of the new feature. <strong>Dedalus Labs</strong> handles OAuth to Reddit Ads + X Ads. Browser Use places the ad targeted at the same audience that was asking for it. <strong>AgentMail</strong> issues tracked discount codes for sign-ups through the ad link.
+      </div>
+      <div class="output-box">
+        <div class="output-box-lbl">Dual Path</div>
+        <div class="output-box-txt"><strong>Bug →</strong> public fix post on r/hellofresh · no spend &nbsp;|&nbsp; <strong>Feature →</strong> ad live on Reddit + X · tracked discount</div>
+      </div>
+      <div class="chips">
+        <span class="chip chip-r">Browser Use</span>
+        <span class="chip chip-r">Mosaic</span>
+        <span class="chip chip-b">Dedalus Labs</span>
+        <span class="chip chip-b">AgentMail</span>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step">
+      <div class="step-head">
+        <div class="step-index">STEP 05</div>
+        <div class="step-platform">Slack<br>Dashboard</div>
+      </div>
+      <div class="step-title">Brief the<br><em>Team</em></div>
+      <div class="step-body">
+        <strong>Convex</strong> fires a Slack notification: cluster found, classification, fix built, which path was taken, and result. Every step links to its <strong>Laminar</strong> trace.<br><br>
+        <strong>Convex</strong> keeps a live listener on all replied-to threads. Follow-up questions are answered automatically — agent pulls what it built from <strong>Supermemory</strong> and responds accurately.<br><br>
+        The <strong>Vercel dashboard</strong> shows the marketing lead every feature shipped and bug fixed, with link clicks and users acquired via tracked codes — all tied to the original post that triggered the build.
+      </div>
+      <div class="output-box">
+        <div class="output-box-lbl">Slack</div>
+        <div class="output-box-txt"><strong>[Bug]</strong> Mobile crash fixed · posted to r/hellofresh · $0 spend &nbsp;|&nbsp; <strong>[Feat]</strong> Week-skip shipped · ad live · 3 sign-ups</div>
+      </div>
+      <div class="chips">
+        <span class="chip chip-b">Convex</span>
+        <span class="chip chip-g">Vercel</span>
+        <span class="chip chip-k">Supermemory</span>
+        <span class="chip chip-k">Laminar</span>
+      </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard">
+      <div class="dash-header">
+        <div class="dash-title">↗ GRIPE DASHBOARD</div>
+        <div class="dash-live"><div class="live-dot"></div>Live</div>
+      </div>
+
+      <div class="dash-row">
+        <div class="dash-metric">
+          <div class="dash-metric-val">6</div>
+          <div class="dash-metric-lbl">Total Shipped</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-val">24</div>
+          <div class="dash-metric-lbl">Users Acquired</div>
+        </div>
+      </div>
+
+      <div class="dash-list">
+        <div class="dfl-lbl">Item → Type → Result</div>
+        <div class="dfl-item">
+          <div class="dfl-dot bug"></div>
+          <div class="dfl-name">Mobile checkout crash</div>
+          <div class="dfl-tag bug">BUG</div>
+        </div>
+        <div class="dfl-item">
+          <div class="dfl-dot"></div>
+          <div class="dfl-name">Week-skip feature</div>
+          <div class="dfl-tag feat">9 users</div>
+        </div>
+        <div class="dfl-item">
+          <div class="dfl-dot bug"></div>
+          <div class="dfl-name">Confirm email missing</div>
+          <div class="dfl-tag bug">BUG</div>
+        </div>
+        <div class="dfl-item">
+          <div class="dfl-dot"></div>
+          <div class="dfl-name">Dark mode</div>
+          <div class="dfl-tag feat">15 users</div>
+        </div>
+      </div>
+
+      <div class="dash-bar">
+        <div class="dfl-lbl">Post Volume — target subreddit</div>
+        <div class="drb-bar-row">
+          <div class="drb-name">Bug reports</div>
+          <div class="drb-track"><div class="drb-fill" style="width:65%"></div></div>
+          <div class="drb-val">1.2k</div>
+        </div>
+        <div class="drb-bar-row">
+          <div class="drb-name">Feature reqs</div>
+          <div class="drb-track"><div class="drb-fill green" style="width:45%"></div></div>
+          <div class="drb-val" style="color:var(--green)">840</div>
+        </div>
+        <div class="drb-bar-row">
+          <div class="drb-name">X Mentions</div>
+          <div class="drb-track"><div class="drb-fill" style="width:30%"></div></div>
+          <div class="drb-val">510</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="bottombar">
+    <div class="bb-left">
+      <div class="bb-left-txt">⟳ Self-Sustaining Loop</div>
+    </div>
+    <div class="bb-recursive">
+      <strong>Bugs:</strong> Fix post triggers replies ("still broken on iOS 17") → Convex picks them up → loop re-runs and patches the edge case. &nbsp;|&nbsp;
+      <strong>Features:</strong> Ad brings new users → they post new requests on Reddit → loop re-runs and builds again. &nbsp;|&nbsp;
+      <strong>The outputs generate the inputs.</strong> No human needed to kick off a second run. Convex deduplicates across Reddit and X.
+    </div>
+    <div class="bb-sponsors">
+      <span class="sp on">Browser Use</span>
+      <span class="sp on">Convex</span>
+      <span class="sp on">Daytona</span>
+      <span class="sp on">Anthropic</span>
+      <span class="sp on">Cubic</span>
+      <span class="sp on">Mosaic</span>
+      <span class="sp on">Dedalus Labs</span>
+      <span class="sp on">AgentMail</span>
+      <span class="sp on">Laminar</span>
+      <span class="sp on">Supermemory</span>
+      <span class="sp on">Vercel</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ════════════════ PAGE 2: FLOWCHART ════════════════ -->
+<div class="page page2">
+
+  <div class="p2-topbar">
+    <div>
+      <div class="p2-title">GRIPE — <span>Decision Flowchart</span></div>
+      <div class="p2-sub">Bug → fix + public post &nbsp;·&nbsp; Feature → build + ad pipeline &nbsp;·&nbsp; Both paths recurse</div>
+    </div>
+    <div style="text-align:right;">
+      <div class="p2-sub">Browser Use Hackathon @ YC · Feb 28 – Mar 1, 2026</div>
+      <div class="p2-sub" style="margin-top:1mm;">Page 2 of 2</div>
+    </div>
+  </div>
+
+  <div class="p2-body">
+    <svg viewBox="0 0 1360 260" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" font-family="'Space Mono', monospace" font-size="6">
+
+      <defs>
+        <marker id="a"  markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#ffffff"/></marker>
+        <marker id="ar" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#ffffff"/></marker>
+        <marker id="ag" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#ffffff"/></marker>
+        <marker id="ay" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#ffffff"/></marker>
+      </defs>
+
+      <!-- ── RECURSE LABEL ── -->
+      <text x="680" y="12" text-anchor="middle" fill="#f5c518" font-size="8" letter-spacing="2" font-weight="700">⟳  OUTPUTS GENERATE NEW INPUTS — LOOP SELF-SUSTAINS</text>
+      <!-- recurse dashed arc: Listen top → Scrape top -->
+      <path d="M1143,104 L1143,20 L230,20 L230,102" stroke="#ffffff" stroke-width="1.8" stroke-dasharray="7,4" fill="none" marker-end="url(#a)"/>
+
+      <!-- ══════════ MIDDLE ROW (shared nodes) ══════════ -->
+
+      <!-- TRIGGER: x=20 y=104 w=115 h=52 -->
+      <rect x="20" y="104" width="115" height="52" fill="#161616" stroke="#333" stroke-width="1.2"/>
+      <text x="77.5" y="122" text-anchor="middle" fill="#efefef" font-weight="700" letter-spacing="1.2" font-size="8">TRIGGER</text>
+      <text x="77.5" y="136" text-anchor="middle" fill="#e2e2e2" font-size="7">New post cluster</text>
+      <text x="77.5" y="148" text-anchor="middle" fill="#d3d3d3" font-size="6">flagged by Convex</text>
+      <line x1="137" y1="130" x2="158" y2="130" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- SCRAPE: x=160 y=104 w=140 h=52 -->
+      <rect x="160" y="104" width="140" height="52" fill="#161616" stroke="#ff3b00" stroke-width="1.8"/>
+      <text x="230" y="120" text-anchor="middle" fill="#ff3b00" font-size="7" letter-spacing="2">STEP 01</text>
+      <text x="230" y="136" text-anchor="middle" fill="#fff" font-weight="700" font-size="11">SCRAPE</text>
+      <text x="230" y="148" text-anchor="middle" fill="#d3d3d3" font-size="6.5">Browser Use · Convex</text>
+      <line x1="305" y1="130" x2="325" y2="130" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- CLASSIFY diamond: cx=390 cy=130 hw=60 hh=34 -->
+      <polygon points="390,96 450,130 390,164 330,130" fill="#161616" stroke="#f5c518" stroke-width="1.8"/>
+      <text x="390" y="123" text-anchor="middle" fill="#f5c518" font-size="6.5" letter-spacing="1.2">STEP 02</text>
+      <text x="390" y="136" text-anchor="middle" fill="#fff" font-weight="700" font-size="9">CLASSIFY</text>
+      <text x="390" y="148" text-anchor="middle" fill="#dcdcdc" font-size="6.5">Claude labels</text>
+
+      <!-- classify → build bug (up) -->
+      <path d="M450,130 L460,130 L460,62 L470,62" stroke="#ffffff" stroke-width="1.8" fill="none" marker-end="url(#a)"/>
+      <!-- classify → build feat (down) -->
+      <path d="M450,130 L460,130 L460,198 L470,198" stroke="#ffffff" stroke-width="1.8" fill="none" marker-end="url(#a)"/>
+
+      <!-- BRIEF: x=900 y=104 w=140 h=52 -->
+      <rect x="900" y="104" width="140" height="52" fill="#161616" stroke="#7c3aed" stroke-width="1.8"/>
+      <text x="970" y="120" text-anchor="middle" fill="#a78bfa" font-size="6.5" letter-spacing="1.2">STEP 05 · SHARED</text>
+      <text x="970" y="136" text-anchor="middle" fill="#fff" font-weight="700" font-size="10">BRIEF TEAM</text>
+      <text x="970" y="148" text-anchor="middle" fill="#d3d3d3" font-size="6.5">Convex → Slack · Vercel</text>
+      <line x1="1042" y1="130" x2="1058" y2="130" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- merge arrows from bug output + feat output into brief -->
+      <path d="M790,62 L850,62 L850,130" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+      <path d="M790,198 L850,198 L850,130" stroke="#ffffff" stroke-width="1.8" fill="none"/>
+      <line x1="850" y1="130" x2="900" y2="130" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- LISTEN: x=1060 y=104 w=165 h=52 -->
+      <rect x="1060" y="104" width="165" height="52" fill="#161616" stroke="#f5c518" stroke-width="1.8"/>
+      <text x="1142.5" y="120" text-anchor="middle" fill="#f5c518" font-size="6.5" letter-spacing="1.2">STEP 06 · SHARED</text>
+      <text x="1142.5" y="136" text-anchor="middle" fill="#fff" font-weight="700" font-size="9.5">LISTEN + RECURSE</text>
+      <text x="1142.5" y="148" text-anchor="middle" fill="#d3d3d3" font-size="6.5">Convex · Supermemory</text>
+      <line x1="1227" y1="130" x2="1238" y2="130" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- DONE: x=1240 y=107 w=95 h=46 -->
+      <rect x="1240" y="107" width="95" height="46" fill="#161616" stroke="#333" stroke-width="1.2"/>
+      <text x="1287.5" y="123" text-anchor="middle" fill="#efefef" font-weight="700" letter-spacing="1.2" font-size="8">DONE</text>
+      <text x="1287.5" y="137" text-anchor="middle" fill="#d8d8d8" font-size="6">Slack briefed</text>
+      <text x="1287.5" y="147" text-anchor="middle" fill="#cfcfcf" font-size="6">loop standing by</text>
+
+      <!-- ══════════ BUG PATH (top row) ══════════ -->
+
+      <!-- BUILD FIX: x=470 y=36 w=150 h=52 -->
+      <rect x="470" y="36" width="150" height="52" fill="#1a0a0a" stroke="#ff3b00" stroke-width="1.8"/>
+      <text x="545" y="52" text-anchor="middle" fill="#ff3b00" font-size="6.5" letter-spacing="1.2">STEP 03 · BUG</text>
+      <text x="545" y="68" text-anchor="middle" fill="#fff" font-weight="700" font-size="10">BUILD FIX</text>
+      <text x="545" y="80" text-anchor="middle" fill="#d3d3d3" font-size="6.5">Daytona · Claude · Cubic</text>
+      <line x1="622" y1="62" x2="648" y2="62" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- BUG OUTPUT: x=650 y=30 w=140 h=64 -->
+      <rect x="650" y="30" width="140" height="64" fill="#1a0a0a" stroke="#ff3b00" stroke-width="1.8"/>
+      <text x="720" y="48" text-anchor="middle" fill="#ff3b00" font-size="6.2" letter-spacing="1">STEP 04 · BUG PATH</text>
+      <text x="720" y="67" text-anchor="middle" fill="#fff" font-weight="700" font-size="9">POST FIX TO REDDIT</text>
+      <text x="720" y="81" text-anchor="middle" fill="#d3d3d3" font-size="6.1">Browser Use replies to thread</text>
+      <text x="720" y="89" text-anchor="middle" fill="#c8c8c8" font-size="5.4">+ announces fix in community</text>
+
+      <!-- ══════════ FEAT PATH (bottom row) ══════════ -->
+
+      <!-- BUILD FEATURE: x=470 y=172 w=150 h=52 -->
+      <rect x="470" y="172" width="150" height="52" fill="#0a1a0a" stroke="#00b87a" stroke-width="1.8"/>
+      <text x="545" y="188" text-anchor="middle" fill="#00b87a" font-size="6.5" letter-spacing="1.2">STEP 03 · FEAT</text>
+      <text x="545" y="204" text-anchor="middle" fill="#fff" font-weight="700" font-size="10">BUILD FEAT</text>
+      <text x="545" y="216" text-anchor="middle" fill="#d3d3d3" font-size="6.5">Daytona · Claude · Cubic</text>
+      <line x1="622" y1="198" x2="648" y2="198" stroke="#ffffff" stroke-width="1.8" marker-end="url(#a)"/>
+
+      <!-- FEAT OUTPUT: x=650 y=166 w=140 h=64 -->
+      <rect x="650" y="166" width="140" height="64" fill="#0a1a0a" stroke="#00b87a" stroke-width="1.8"/>
+      <text x="720" y="184" text-anchor="middle" fill="#00b87a" font-size="6.2" letter-spacing="1">STEP 04 · FEAT PATH</text>
+      <text x="720" y="203" text-anchor="middle" fill="#fff" font-weight="700" font-size="9">LAUNCH AD CAMPAIGN</text>
+      <text x="720" y="217" text-anchor="middle" fill="#d3d3d3" font-size="6.1">Mosaic · Dedalus Labs OAuth</text>
+      <text x="720" y="225" text-anchor="middle" fill="#c8c8c8" font-size="5.4">AgentMail discount codes</text>
+
+    </svg>
+  </div>
+
+  <div class="p2-footer">
+    <div class="p2-footer-txt">GRIPE · Autonomous Product Intelligence Loop · Browser Use Hackathon @ YC</div>
+    <div class="p2-legend">
+      <div class="legend-item" style="color:#ff3b00;">
+        <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#ff3b00" stroke-width="2"/></svg>
+        Bug Path
+      </div>
+      <div class="legend-item" style="color:#00b87a;">
+        <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#00b87a" stroke-width="2"/></svg>
+        Feature Path
+      </div>
+      <div class="legend-item" style="color:#7c3aed;">
+        <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#7c3aed" stroke-width="2"/></svg>
+        Shared Path
+      </div>
+      <div class="legend-item" style="color:#f5c518;">
+        <svg width="20" height="8"><line x1="0" y1="4" x2="20" y2="4" stroke="#f5c518" stroke-width="2" stroke-dasharray="4,2"/></svg>
+        Self-Sustaining Loop
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

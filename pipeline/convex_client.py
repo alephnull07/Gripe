@@ -1,7 +1,7 @@
 import os
 import requests
 
-CONVEX_SITE_URL = os.getenv("CONVEX_SITE_URL", "https://beaming-zebra-910.convex.site")
+CONVEX_SITE_URL = os.getenv("CONVEX_SITE_URL", "https://gregarious-marmot-798.convex.site")
 
 
 def add_items(items: list) -> list:
@@ -20,6 +20,16 @@ def update_item_status(item_id: str, status: str, message: str = "", **kwargs):
     payload.update(kwargs)
     resp = requests.patch(f"{CONVEX_SITE_URL}/api/items/status", json=payload)
     resp.raise_for_status()
+
+
+def get_current_run() -> dict | None:
+    """Get the current/latest pipeline run."""
+    try:
+        resp = requests.get(f"{CONVEX_SITE_URL}/api/runs/current")
+        resp.raise_for_status()
+        return resp.json()
+    except Exception:
+        return None
 
 
 def trigger_run() -> str:

@@ -38,28 +38,15 @@ async def scrape_subreddit(url: str, source: str) -> ScrapeResult:
         task = await client.tasks.create_task(
             task=task_text,
             start_url=url,
-            structured_output=True,
-            schema=ScrapeResult,
+            structured_output=json.dumps(ScrapeResult.model_json_schema()),
         )
         task_id = task.id
         print(f"    Cloud task created: {task_id} for {url}")
 
-        # Poll until done
-        while True:
-            status = await client.tasks.get_task_status(task_id=task_id)
-            state = status.status if hasattr(status, "status") else str(status)
-            if state in ("finished", "completed", "done"):
-                break
-            if state in ("failed", "error", "stopped"):
-                print(f"    Task {task_id} failed: {state}")
-                return ScrapeResult(posts=[])
-            await asyncio.sleep(3)
+        # Wait for completion (polls automatically, 5 min timeout)
+        result = await client.tasks.wait(task_id, timeout=300, interval=3)
 
-        # Get results
-        result = await client.tasks.get_task(task_id=task_id, schema=ScrapeResult)
         if result.output:
-            if isinstance(result.output, ScrapeResult):
-                return result.output
             data = result.output
             if isinstance(data, str):
                 data = json.loads(data)

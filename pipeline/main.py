@@ -1,16 +1,17 @@
 import asyncio
 import json
+import os
 import sys
 import time
 
 from dotenv import load_dotenv
 
-load_dotenv(override=True)
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'), override=True)
 
 from scraper import scrape_all
 from classifier import classify_posts
 from viability import validate_bugs, check_viability
-from convex_client import trigger_run, update_run_step, complete_run, add_items, update_item_status
+from convex_client import trigger_run, update_run_step, complete_run, add_items, update_item_status, get_current_run
 
 SPINNER = ["\u28cb", "\u28d9", "\u28f9", "\u28f8", "\u28fc", "\u28f4", "\u28e6", "\u28e7", "\u28c7", "\u28cf"]
 
@@ -55,10 +56,15 @@ async def main():
     print("  Gripe Pipeline")
     print("=" * 50)
 
-    # Trigger run in Convex (frontend shows "running")
-    print("\n  Triggering pipeline run in Convex...")
-    run_id = trigger_run()
-    print(f"  Run ID: {run_id}")
+    # Use existing run if one is already running (triggered by API route), otherwise create one
+    existing = get_current_run()
+    if existing and existing.get("status") == "running" and existing.get("_id"):
+        run_id = existing["_id"]
+        print(f"\n  Using existing run: {run_id}")
+    else:
+        print("\n  Triggering pipeline run in Convex...")
+        run_id = trigger_run()
+        print(f"  Run ID: {run_id}")
 
     # Step 1: Scrape
     print("\n[1/4] Scraping subreddits")
@@ -126,21 +132,14 @@ async def main():
 
     if items_for_convex:
         item_ids = add_items(items_for_convex)
-        print(f"       -> {len(item_ids)} items pushed to Convex")
-
-        # Mark each item as done
-        for item_id in item_ids:
-            update_item_status(item_id, "done")
+        print(f"       -> {len(item_ids)} items pushed to Convex (status: detected)")
+        # Items stay as "detected" — the TS orchestrator picks them up for BUILD/VERIFY/PR
     else:
         item_ids = []
         print("       -> No items to push")
 
-    # Mark remaining steps as done and complete the run
-    update_run_step(run_id, "BUILD", "done", "VERIFY")
-    update_run_step(run_id, "VERIFY", "done", "DEPLOY")
-    update_run_step(run_id, "DEPLOY", "done", "POST")
-    update_run_step(run_id, "POST", "done")
-    complete_run(run_id, len(item_ids))
+    # Python pipeline is done — BUILD/VERIFY/DEPLOY/POST handled by TS orchestrator
+    update_run_step(run_id, "BUILD", "pending")
 
     # Also write local output.json
     output = {

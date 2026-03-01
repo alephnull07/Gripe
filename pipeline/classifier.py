@@ -1,5 +1,6 @@
 import asyncio
 import json
+import re
 from pydantic import BaseModel
 from typing import Literal
 
@@ -7,6 +8,25 @@ from langchain_aws import ChatBedrockConverse
 from langchain_core.messages import HumanMessage
 
 from scraper import RedditPost
+
+
+def extract_json(text: str) -> dict:
+    """Extract a JSON object from text that may contain surrounding prose."""
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.split("\n", 1)[1] if "\n" in text else text[3:]
+        text = text.rsplit("```", 1)[0].strip()
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    match = re.search(r'\{[^{}]*\}', text)
+    if match:
+        try:
+            return json.loads(match.group())
+        except json.JSONDecodeError:
+            pass
+    raise json.JSONDecodeError("No valid JSON object found", text, 0)
 
 
 class ClassifiedPost(BaseModel):
@@ -17,7 +37,7 @@ class ClassifiedPost(BaseModel):
 
 
 llm = ChatBedrockConverse(
-    model="us.anthropic.claude-sonnet-4-5-20250929-v1:0",
+    model="us.anthropic.claude-3-5-haiku-20241022-v1:0",
     region_name="us-west-2",
 )
 
@@ -42,16 +62,18 @@ Respond with ONLY valid JSON, no markdown backticks:
 
     try:
         response = await llm.ainvoke([HumanMessage(content=prompt)])
-        raw = response.content.strip()
-        if raw.startswith("```"):
-            raw = raw.split("\n", 1)[1] if "\n" in raw else raw[3:]
-            raw = raw.rsplit("```", 1)[0].strip()
-        data = json.loads(raw)
+        raw = response.content
+        if isinstance(raw, list):
+            raw = "".join(
+                block.get("text", "") if isinstance(block, dict) else str(block)
+                for block in raw
+            )
+        data = extract_json(raw.strip())
         return ClassifiedPost(
             original=post,
-            type=data["type"],
+            type=data["type"].lower(),
             summary=data["summary"],
-            severity=data["severity"],
+            severity=data["severity"].lower(),
         )
     except Exception as e:
         print(f"Error classifying post '{post.title}': {e}")

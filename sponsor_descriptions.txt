@@ -1,0 +1,80 @@
+﻿Browser Use Web Agents Hackathon: Complete Sponsor Guide
+This document provides an in-depth summary of the main features and capabilities of all the sponsors supporting the Browser Use Web Agents Hackathon. These tools are critical for building, testing, hosting, and scaling next-generation autonomous AI agents.
+1. Convex (convex.dev)
+Category: Backend-as-a-Service (BaaS) & Database
+Convex is a reactive backend and database platform designed to let developers build entire backends using pure TypeScript. It’s highly optimized for rapid development and AI-generated code.
+* Real-time Database: Features a fully reactive database. Like React components update when state changes, Convex queries automatically re-run and push updates to clients when database data changes—without websockets or manual cache invalidation.
+* TypeScript Native: All backend functions (queries, mutations, and actions) are written in TypeScript, providing end-to-end type safety from the database schema to the frontend.
+* ACID-Compliant Transactions: Mutations run as guaranteed transactions. Convex handles retries and conflict resolution automatically.
+* Seamless AI Integration: Because everything from schemas to server functions is strictly typed in TypeScript, AI coding agents have a much easier time generating accurate, bug-free backend code compared to traditional SQL/ORM setups.
+* Built-in Capabilities: Features built-in authentication, file storage, vector storage (for RAG), cron jobs, and seamless integrations with Next.js, React, and other modern frameworks.
+2. VibeFlow (vibeflow.ai)
+Category: AI Full-Stack App Builder
+VibeFlow bridges the gap between AI-generated frontends (like those from v0 or Lovable) and real business logic by offering a visual, editable backend.
+* Visual Backend Workflows: Features an intuitive node-based editor (similar to n8n) that lets developers and non-technical builders visually design, edit, and debug API endpoints, database interactions, and business logic.
+* Fully Editable Code Generation: Unlike "black box" AI builders, VibeFlow generates clean, editable TypeScript. Every visual node corresponds to actual code that you can own and modify.
+* Built-in Integrations: Comes pre-wired with a database and essential service integrations (including agentic AI models), eliminating the need to duct-tape multiple tools together.
+* Spec-Driven Development: Employs AI agents that understand tasks based on high-level documentation and maintain context across your application, ensuring smooth full-stack generation.
+3. AgentMail (agentmail.to)
+Category: Email API for AI Agents
+AgentMail is the first dedicated email infrastructure built exclusively for autonomous AI agents, allowing them to act as independent entities on the internet.
+* Programmatic Inbox Creation: Spin up real email inboxes for agents in milliseconds via a single API call (e.g., agent@agentmail.to). No UI or admin consoles required.
+* AI-Native Features: Built-in semantic search across all organizational inboxes, automatic labeling using custom prompts, and structured data extraction from unstructured emails and attachments.
+* High-Volume & Usage-Based: Free from the restrictive rate limits and per-inbox monthly fees of legacy providers like Gmail. It uses usage-based pricing and supports high-volume agent outreach.
+* Actionable Webhooks: Real-time event notifications via webhooks and websockets allow agents to trigger workflows the second an email or 2FA code arrives.
+4. Cubic (cubic.dev)
+Category: AI Code Review
+Cubic is an advanced AI code reviewer built for complex, multi-service codebases that aims to replace simple file-by-file reviewers.
+* Repository-Wide Analysis (Interprocedural): Instead of only looking at the changed file diff, Cubic traces variables and dependencies across 10-20 function boundaries across the entire repository. This catches cross-file logic bugs and security flaws that simpler tools miss.
+* Low False Positive Rate: Specially tuned to reduce noise and "nitpicking." It only leaves comments where there is a genuine issue, boasting a 51% reduction in false positives compared to general AI reviewers.
+* Natural Language Custom Policies: Developers can write organizational rules in plain English (e.g., "All database queries in the billing service must use parameterized statements"), and Cubic enforces them during reviews.
+* Self-Learning System: Adapts to project conventions by remembering maintainer corrections and learning from the coding patterns of senior engineers.
+5. HUD.ai
+Category: AI Agent Evaluations & Benchmarks
+HUD provides infrastructure for building Reinforcement Learning (RL) environments and running massive-scale evaluations for AI agents.
+* Production to Environment Conversion: Allows developers to turn their production APIs, databases, or frontends into isolated, reproducible "sandbox environments" for agents using a simple Python SDK (@env.tool()).
+* Scenarios and Rubrics: Define specific scenarios (the prompt to the agent) and deterministic scoring rubrics (evaluating the resulting state of the environment) to see how well an agent performs.
+* Massive Parallelization: Their cloud infrastructure allows developers to run thousands of concurrent environments with sub-second latency to rapidly benchmark agents.
+* SheetBench-50 & OSWorld: Hosts major public benchmarks, including complex workflows like financial analyst data modeling in Google Sheets, capturing detailed telemetry and visual reasoning traces of agent decisions.
+6. Superset (superset.sh)
+Category: Parallel AI Coding Terminal
+Superset is a desktop terminal environment designed to orchestrate swarms of CLI-based coding agents at the same time.
+* Git Worktree Isolation: The core feature is that every agent task spins up its own isolated Git worktree and branch. This allows you to run 10+ agents concurrently without them corrupting each other's code.
+* Agent-Agnostic: Works with any CLI coding agent, including Claude Code, OpenCode, Codex, Aider, and Cursor Agent. You bring the models and the APIs.
+* Built-in Diff Viewer: Allows developers to monitor the status of all active agents from a single dashboard, review their changes visually, and merge them directly.
+* Persistent Sessions: Runs a daemon that keeps agent sessions alive even if the application crashes or restarts, ensuring long-running refactoring or testing tasks complete successfully.
+7. Laminar (laminar.sh)
+Category: AI Agent Observability
+Laminar is an open-source observability platform purpose-built for tracing, evaluating, and debugging complex AI agent trajectories.
+* Visual Session Replay: Highly tailored for Browser Agents (like Browser Use or Stagehand). Laminar captures browser screen recordings and perfectly synchronizes the video with the agent's LLM trace, so you can see exactly what the agent was looking at when it failed.
+* True Agent Debugger: Allows you to run traces locally, pause at step N, modify the system prompt or context, and immediately replay the agent to fix logic errors.
+* Signal Extraction: Use natural language to define a "signal" (e.g., "Find times when the database tool timed out"), and Laminar's internal AI will scan millions of traces to extract and categorize those events.
+* Platform-Wide SQL: Exposes all trace and span data via SQL, allowing developers to build robust datasets for evaluations.
+8. Supermemory (supermemory.ai)
+Category: Long-Term Memory Infrastructure
+Supermemory provides the context engineering layer to give stateless LLM agents persistent, self-growing memory.
+* Hybrid Vector & Graph Indexing: Uses an advanced pipeline that stores data in both a vector store (for semantic similarity) and a graph database (for relationship mapping).
+* Temporal Reasoning & Disambiguation: Specifically designed to understand time. If a user says "My favorite color is green" and later says "My favorite color is now blue," Supermemory tracks the state mutation rather than returning conflicting context.
+* The Memory Router: Allows you to seamlessly plug Supermemory into an existing stack by simply changing your AI provider's base URL (e.g., pointing OpenAI calls through the Supermemory proxy). The router intercepts, injects relevant memory context, and forwards the prompt.
+* Persistent User Profiles: Automatically builds and updates dynamic profiles over time, making it ideal for extremely long-running personal assistant agents.
+9. Dedalus Labs (dedaluslabs.ai)
+Category: Agent Orchestration & MCP Cloud
+Dedalus Labs positions itself as the "Vercel for AI Agents," abstracting away the infrastructure required to connect models to tools.
+* Hosted MCP Server Marketplace: Removes the need to host Docker files or local configs for Model Context Protocol (MCP) servers. Dedalus hosts integrations (Slack, GitHub, Notion, web browsers) in the cloud.
+* Unified API (5 Lines of Code): An OpenAI-compatible SDK that allows developers to route between models (Claude, GPT-4, etc.) and connect hosted MCP servers with just a few lines of code.
+* Vendor-Agnostic Handoffs: Easily swap out the underlying foundational model powering your agent without needing to rewrite any tool-calling or streaming logic.
+* Serverless Autoscaling: Manages the autoscaling, auth, and load balancing of MCP servers so developers can push agents to production instantly.
+10. Daytona (daytona.io)
+Category: Secure Development Environments & Sandboxes
+Daytona provides instantaneous, secure sandboxes specifically designed for executing AI-generated code.
+* Sub-90ms Provisioning: Can spin up secure, isolated sandboxes via an API in milliseconds, which is critical for agents that need to test code or run tasks dynamically.
+* Computer Use Virtual Desktops: Offers secure virtual desktops (Linux, Windows, macOS) that agents can interact with directly (perfect for "Computer Use" agents).
+* Stateful and Persistent: Unlike traditional serverless functions, Daytona sandboxes can run indefinitely, making them suitable for long-running, autonomous web agents.
+* Massive Parallelization: Safely execute unvetted, AI-generated code with zero risk to your primary infrastructure, allowing agents to test thousands of solutions concurrently.
+Big Tech / Foundation Model Sponsors
+* 11. Google DeepMind (deepmind.google): Google's premier AI research lab, providing access to the Gemini family of models (including Gemini 1.5 Pro and Flash), which boast massive context windows (up to 2M tokens)—ideal for agents reading vast amounts of web data or full codebases.
+* 12. Vercel (vercel.com): The leading platform for deploying scalable web applications. Vercel is the creator of Next.js and the Vercel AI SDK, which provides standard interfaces for building React-based AI interfaces and streaming LLM responses.
+* 13. MongoDB (mongodb.com): A highly flexible, document-based NoSQL database. Their Atlas platform now includes robust Vector Search capabilities, making it a great all-in-one data layer for agentic memory and standard application data.
+* 14. AWS (aws.amazon.com): Provides robust cloud infrastructure and Amazon Bedrock, a fully managed service that offers a single API to access a variety of high-performing foundation models (including Anthropic, Meta, and Cohere) alongside enterprise-grade security.
+* 15. Anthropic (anthropic.com): The research lab behind the Claude 3.5 family. Claude 3.5 Sonnet is currently widely regarded as the industry leader for agentic coding, tool use, and "Computer Use" API capabilities.
+* 16. OpenAI (openai.com): The creators of the GPT-4o and o1 / o3 reasoning models, providing industry-standard APIs for text generation, structured outputs, vision, and tool calling—all critical for building reliable web agents.

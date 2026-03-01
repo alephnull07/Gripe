@@ -29,6 +29,16 @@ export const getStats = query({
   },
 });
 
+export const getByStatus = query({
+  args: { status: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("pipelineItems")
+      .withIndex("by_status", (q) => q.eq("status", args.status))
+      .collect();
+  },
+});
+
 export const addItems = mutation({
   args: {
     items: v.array(

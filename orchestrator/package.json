@@ -1,0 +1,26 @@
+{
+  "name": "gripe-orchestrator",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "tsx --env-file=../.env src/main.ts",
+    "dev": "tsx --env-file=../.env watch src/main.ts",
+    "test:daytona": "tsx --env-file=../.env src/test-daytona.ts",
+    "test:bug": "tsx --env-file=../.env src/test-pipeline.ts bug",
+    "test:feature": "tsx --env-file=../.env src/test-pipeline.ts feature"
+  },
+  "dependencies": {
+    "@anthropic-ai/bedrock-sdk": "^0.26.4",
+    "@anthropic-ai/sdk": "^0.36.0",
+    "@daytonaio/sdk": "^0.148.0",
+    "@lmnr-ai/lmnr": "^0.5.0",
+    "browser-use-sdk": "^3.1.0",
+    "convex": "^1.17.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

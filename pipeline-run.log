@@ -1,0 +1,730 @@
+
+============================================================
+[2026-03-01T13:22:32.461Z] Pipeline run started (runId: j97fy7wy51ygz5vqvqnyv44je18225m1)
+============================================================
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+==================================================
+  Gripe Pipeline
+==================================================
+
+  Using existing run: j97fy7wy51ygz5vqvqnyv44je18225m1
+
+[1/4] Scraping subreddits
+  ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]      Cloud task created: dc3e6491-78ba-483b-8f83-f7194a7def98 for https://www.reddit.com/r/YCHackathonDemo/best/
+    Cloud task created: 602998b9-e860-4646-b5c6-83999fe74654 for https://www.reddit.com/r/competitorYCHackathon/
+  ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ✓ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47.2s]
+       -> 4 posts found
+
+[2/4] Classifying posts
+  ⣋ Classifying 4 posts via Bedrock [0s]    ⣙ Classifying 4 posts via Bedrock [0s]    ⣹ Classifying 4 posts via Bedrock [0s]    ⣸ Classifying 4 posts via Bedrock [0s]    ⣼ Classifying 4 posts via Bedrock [1s]    ⣴ Classifying 4 posts via Bedrock [1s]    ⣦ Classifying 4 posts via Bedrock [1s]    ⣧ Classifying 4 posts via Bedrock [1s]    ⣇ Classifying 4 posts via Bedrock [1s]    ⣏ Classifying 4 posts via Bedrock [1s]    ✓ Classifying 4 posts via Bedrock [1.5s]
+       -> 1 bugs, 1 features, 2 skipped
+
+[3/4] Validating bugs + checking feature viability
+  ⣋ Validating 1 bugs via Bedrock [0s]    ⣋ Checking 1 features via Bedrock [0s]    ⣙ Validating 1 bugs via Bedrock [0s]    ⣙ Checking 1 features via Bedrock [0s]    ⣹ Validating 1 bugs via Bedrock [0s]    ⣹ Checking 1 features via Bedrock [0s]    ⣸ Validating 1 bugs via Bedrock [0s]    ⣸ Checking 1 features via Bedrock [0s]    ⣼ Validating 1 bugs via Bedrock [1s]    ⣼ Checking 1 features via Bedrock [1s]    ⣴ Validating 1 bugs via Bedrock [1s]    ⣴ Checking 1 features via Bedrock [1s]    ⣦ Validating 1 bugs via Bedrock [1s]    ⣦ Checking 1 features via Bedrock [1s]    ⣧ Validating 1 bugs via Bedrock [1s]    ⣧ Checking 1 features via Bedrock [1s]    ⣇ Validating 1 bugs via Bedrock [1s]    ⣇ Checking 1 features via Bedrock [1s]      Bug rejected: Why is the login button broken? Is anyone else having the same issue -- Lack of specific technical details about the login issue prevents proper bug investigation
+  ⣏ Checking 1 features via Bedrock [1s]    ✓ Validating 1 bugs via Bedrock [1.4s]
+  ⣋ Checking 1 features via Bedrock [2s]    ⣙ Checking 1 features via Bedrock [2s]    ⣹ Checking 1 features via Bedrock [2s]    ⣸ Checking 1 features via Bedrock [2s]    ⣼ Checking 1 features via Bedrock [2s]    ⣴ Checking 1 features via Bedrock [2s]    ⣦ Checking 1 features via Bedrock [2s]    ⣧ Checking 1 features via Bedrock [3s]    ⣇ Checking 1 features via Bedrock [3s]    ⣏ Checking 1 features via Bedrock [3s]    ⣋ Checking 1 features via Bedrock [3s]    ⣙ Checking 1 features via Bedrock [3s]    ⣹ Checking 1 features via Bedrock [3s]    ⣸ Checking 1 features via Bedrock [3s]    ⣼ Checking 1 features via Bedrock [4s]    ⣴ Checking 1 features via Bedrock [4s]    ⣦ Checking 1 features via Bedrock [4s]    ⣧ Checking 1 features via Bedrock [4s]    ⣇ Checking 1 features via Bedrock [4s]    ⣏ Checking 1 features via Bedrock [4s]    ⣋ Checking 1 features via Bedrock [5s]    ✓ Checking 1 features via Bedrock [4.7s]
+       -> 0 confirmed bugs, 1 viable features
+
+[4/4] Pushing to Convex dashboard
+       -> 1 items pushed to Convex (status: detected)
+==================================================
+  Done! Results -> output.json + Convex dashboard
+==================================================
+{
+  "accepted_bugs": [],
+  "accepted_features": [
+    {
+      "title": "Need this fix ASAP or im gonna fr stop using this app",
+      "body": "why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...",
+      "summary": "User requests dark mode functionality for the app",
+      "severity": "low",
+      "upvotes": 1,
+      "url": "https://www.reddit.com/r/competitorYCHackathon/comments/1rhq3t4/",
+      "subreddit": "r/competitorYCHackathon",
+      "source": "competitor",
+      "top_comments": [
+        "Thats what im saying",
+        "Yeah can we please get this implementation please I need this desperately",
+        "Holy shit i've been asking for this for so long...",
+        "lowk a good idea"
+      ]
+    }
+  ]
+}
+
+==================================================
+  GRIPE Orchestrator — BUILD / VERIFY / DEPLOY
+==================================================
+
+Fetching detected items from Convex...
+Found 1 item(s) to process:
+
+  - [FEATURE] Need this fix ASAP or im gonna fr stop using this app (low)
+
+Using existing run: j97fy7wy51ygz5vqvqnyv44je18225m1
+
+============================================================
+  FEATURE: "Need this fix ASAP or im gonna fr stop using this app"
+  Source: r/competitorYCHackathon | Severity: low
+============================================================
+
+1. Creating sandbox...
+   Sandbox: 049a91dd-2605-4911-9227-9a0152b0397b
+2. Cloning repo...
+   Cloned to /home/daytona/app
+3. Installing dependencies...
+   Dependencies installed
+4. Starting dev server...
+   Waiting for Next.js to compile (~15s)...
+   Preview: https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net
+
+A. Reading source files...
+   Found 73 source files
+B. Sending to Claude...
+C. Applying 7 patch(es)...
+   Patched: /home/daytona/app/app/globals.css
+   Patched: /home/daytona/app/app/layout.tsx
+   Patched: /home/daytona/app/components/theme-provider.tsx
+   Patched: /home/daytona/app/components/dashboard-nav.tsx
+   Patched: /home/daytona/app/app/page.tsx
+   Patched: /home/daytona/app/app/login/page.tsx
+   Patched: /home/daytona/app/package.json
+D. Waiting for hot reload (~8s)...
+E. Verifying with Browser Use...
+
+   Raw BU result: {
+  "id": "1218cd3a-50ca-44a5-9871-ba05b6db87bf",
+  "sessionId": "b13aca1e-1e0c-45ae-ac39-a59025a8dc93",
+  "llm": "browser-use-2.0",
+  "task": "Navigate to https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net.\nYou should see a login page for \"ShopWave\".\n\nStep 1: Log in with email \"demo@shop.com\" and password \"password123\".\n        If the login button doesn't work, try navigating directly to https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/login\nStep 2: After login you should be on the dashboard.\nStep 3: Look for the following NEW FEATURE that was just added:\n        Feature: \"User requests dark mode functionality for the app\"\n        Original request: \"why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...\"\nStep 4: Interact with the feature to verify it works as described.\nStep 5: Confirm the feature is present and functional.\n\nReturn your final answer as ONLY a JSON object (no other text):\n{ \"pass\": true or false, \"reason\": \"short explanation of what you found\" }",
+  "status": "finished",
+  "createdAt": "2026-03-01T13:25:50.735427Z",
+  "startedAt": "2026-03-01T13:25:53.415312Z",
+  "finishedAt": "2026-03-01T13:27:38.767647Z",
+  "metadata": {},
+  "steps": [
+    {
+      "number": 1,
+      "memory": "The browser is currently on about:blank. I need to navigate to the provided URL to start the task. My first goal is to reach the ShopWave login page.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "about:blank",
+      "screenshotUrl": null,
+      "actions": [
+        "{\"navigate\": {\"url\": \"https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net\", \"new_tab\": false}}"
+      ]
+    },
+    {
+      "number": 2,
+      "memory": "The browser is currently showing a \"Preview URL Warning\" page from Daytona. I need to click the \"I Understand, Continue\" button to proceed to the actual ShopWave website. After that, I will be able to see the login page and proceed with Step 1 of the user request.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/2.png",
+      "actions": [
+        "{\"click\": {\"index\": 58}}"
+      ]
+    },
+    {
+      "number": 3,
+      "memory": "The landing page has loaded successfully. I see a \"Login\" button in the top right and a \"Get Started\" button in the center. I will click the \"Login\" button to proceed to the login page as per Step 1.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/3.png",
+      "actions": [
+        "{\"click\": {\"index\": 2}}"
+      ]
+    },
+    {
+      "number": 4,
+      "memory": "The landing page has loaded. The previous attempt to click the \"Login\" button failed because the element index changed after the page fully rendered. I now see the \"Login\" link at index 130. I will click it to proceed to the login page.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/4.png",
+      "actions": [
+        "{\"click\": {\"index\": 130}}"
+      ]
+    },
+    {
+      "number": 5,
+      "memory": "I have successfully navigated to the login page. The browser state shows an empty DOM tree, but the screenshot clearly shows the login form with email and password fields and a \"Sign In\" button. I will wait a moment for the DOM to populate or use `evaluate` to find the input fields if they don't appear in the next state. Actually, I'll try to refresh the state by waiting briefly, as the screenshot confirms the page is rendered.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/login",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/5.png",
+      "actions": [
+        "{\"wait\": {\"seconds\": 2}}"
+      ]
+    },
+    {
+      "number": 6,
+      "memory": "I have successfully reached the login page and the elements are now visible in the browser state. I will proceed with Step 1: log in using the provided credentials.\nEmail: demo@shop.com\nPassword: password123\nNext immediate goal: Input email and password, then click Sign In.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/login",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/6.png",
+      "actions": [
+        "{\"input\": {\"index\": 268, \"text\": \"demo@shop.com\", \"clear\": true}}",
+        "{\"input\": {\"index\": 271, \"text\": \"password123\", \"clear\": true}}",
+        "{\"click\": {\"index\": 272}}"
+      ]
+    },
+    {
+      "number": 7,
+      "memory": "The login process is in progress (\"Signing in...\"). I need to wait for the dashboard to load. Once on the dashboard, I will look for the \"User requests dark mode functionality\" feature and the toggle theme button to verify it.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/login",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/7.png",
+      "actions": [
+        "{\"wait\": {\"seconds\": 3}}"
+      ]
+    },
+    {
+      "number": 8,
+      "memory": "I have successfully logged in and reached the dashboard.\nI see a \"Toggle theme\" button (index 4416) in the header.\nI need to find the specific feature description \"User requests dark mode functionality for the app\" mentioned in the user request.\nIt might be further down the page or under a specific section.\nI will scroll down to look for the feature text and then interact with the theme toggle.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/8.png",
+      "actions": [
+        "{\"scroll\": {\"down\": true, \"pages\": 1.0}}"
+      ]
+    },
+    {
+      "number": 9,
+      "memory": "I've scrolled down the dashboard but haven't found the specific feature text \"User requests dark mode functionality for the app\" yet. I see a \"Toggle theme\" button in the header and a notification icon in the bottom left (index 4396/4395). I will check if the feature request is listed under a notifications or feedback section, or if I need to scroll further. I'll start by clicking the icon in the bottom left to see if it's a feedback/feature request panel.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/9.png",
+      "actions": [
+        "{\"click\": {\"index\": 4396}}"
+      ]
+    },
+    {
+      "number": 10,
+      "memory": "I clicked the notification icon in the bottom left (index 4396), which likely opened a feedback or feature request panel. I need to check if the \"User requests dark mode functionality\" feature is listed there. If it's not visible in the current state, I'll wait or look for a way to expand the panel.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/10.png",
+      "actions": [
+        "{\"wait\": {\"seconds\": 2}}"
+      ]
+    },
+    {
+      "number": 11,
+      "memory": "I clicked the notification icon in the bottom left, but the browser state doesn't show a new panel or the specific feature text yet. The icon (index 4396) has an \"N\" on it in the screenshot, suggesting a notification or feedback area. I will wait one more time to see if a modal or popover appears. If not, I will try to click the icon again or look for other interactive elements that might reveal the feature request.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/11.png",
+      "actions": [
+        "{\"wait\": {\"seconds\": 2}}"
+      ]
+    },
+    {
+      "number": 12,
+      "memory": "The notification icon (index 4396) in the bottom left has been clicked, but no content is visible in the browser state or screenshot. I'll try clicking the \"N\" icon again or look for a hidden panel. I'll also try to use `evaluate` to check for any hidden elements or logs that might contain the feature request text, as it's not appearing in the standard DOM tree.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/12.png",
+      "actions": [
+        "{\"click\": {\"index\": 4396}}",
+        "{\"wait\": {\"seconds\": 2}}",
+        "{\"evaluate\": {\"code\": \"(function(){return document.body.innerText})()\"}}"
+      ]
+    },
+    {
+      "number": 13,
+      "memory": "The \"N\" icon in the bottom left (index 4396) hasn't revealed the feature request text in the DOM yet, but it's the most likely place for a \"User request\" to be found. I'll use `evaluate` to check the page for the specific text \"User requests dark mode functionality\" or \"Original request\" to see if it's hidden or in a shadow DOM. Simultaneously, I'll click the \"Toggle theme\" button (index 4416) to verify its functionality, as that's Step 4.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/13.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function(){const text = document.body.innerText; const found = text.includes('dark mode') || text.includes('BLINDING'); return {found, text: text.substring(0, 1000)};})()\"}}",
+        "{\"click\": {\"index\": 4416}}"
+      ]
+    },
+    {
+      "number": 14,
+      "memory": "The \"N\" icon (index 4396) in the bottom left likely contains the feature request, but clicking it hasn't updated the DOM in a way the agent sees yet. I will try to click the \"Toggle theme\" button (index 4416) to verify the functionality first, as it's a direct requirement of Step 4. Then I will use `evaluate` to search for the specific feature text in the entire document, including any hidden or shadow DOM elements, to satisfy Step 3.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/14.png",
+      "actions": [
+        "{\"click\": {\"index\": 4416}}",
+        "{\"evaluate\": {\"code\": \"(function() { const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false); let node; const results = []; while(node = walker.nextNode()) { if (node.textContent.includes('dark mode')) results.push(node.textContent.trim()); } return results; })()\"}}"
+      ]
+    },
+    {
+      "number": 15,
+      "memory": "The \"Toggle theme\" button was clicked, and the screenshot shows the dashboard in dark mode (black background). This confirms the functionality works. I still need to find the specific feature request text \"User requests dark mode functionality for the app\" to satisfy Step 3. Since clicking the \"N\" icon (index 4396) hasn't shown the text in the browser state, I will use `evaluate` to search for the specific text in the DOM, including shadow roots, as it might be part of a feedback widget.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/15.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function() { function findText(root) { if (root.textContent && root.textContent.includes('User requests dark mode')) { return root.textContent; } if (root.shadowRoot) { const found = findText(root.shadowRoot); if (found) return found; } for (const child of root.children) { const found = findText(child); if (found) return found; } return null; } return findText(document.body); })()\"}}",
+        "{\"click\": {\"index\": 4396}}"
+      ]
+    },
+    {
+      "number": 16,
+      "memory": "The \"Toggle theme\" button works as expected, switching the UI to dark mode. I still need to find the specific feature request text \"User requests dark mode functionality for the app\" to complete Step 3. Since clicking the \"N\" icon (index 4396) hasn't shown the text in the browser state, I will use `evaluate` to search for the specific text in the entire document, including shadow roots and hidden elements, as it might be part of a feedback widget or notification panel that isn't being captured in the standard DOM tree.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/16.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function() { function search(root) { const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false); let node; while(node = walker.nextNode()) { if (node.textContent.includes('User requests dark mode')) return node.parentElement; } const all = root.querySelectorAll('*'); for (const el of all) { if (el.shadowRoot) { const found = search(el.shadowRoot); if (found) return found; } } return null; } const result = search(document.body); return result ? result.innerText : 'Not found'; })()\"}}"
+      ]
+    },
+    {
+      "number": 17,
+      "memory": "The \"Toggle theme\" button works, as seen in the screenshot (dark mode). I have clicked the \"N\" icon multiple times, but no visible change occurred in the DOM. I will now use `evaluate` to search for the specific feature request text in the entire document, including shadow roots, as it is likely contained within a feedback widget that is not being captured by the standard browser state.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/17.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function() { const search = (root) => { const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false); let node; while (node = walker.nextNode()) { if (node.textContent.includes('dark mode functionality')) return node.parentElement; } const elements = root.querySelectorAll('*'); for (const el of elements) { if (el.shadowRoot) { const found = search(el.shadowRoot); if (found) return found; } } return null; }; const result = search(document.body); return result ? result.innerText : 'Not found'; })()\"}}"
+      ]
+    },
+    {
+      "number": 18,
+      "memory": "The \"Toggle theme\" button works, as seen in the screenshot (dark mode). I have clicked the \"N\" icon multiple times, but no visible change occurred in the DOM or screenshot. I will now use `evaluate` to search for the specific feature request text in the entire document, including shadow roots, as it is likely contained within a feedback widget that is not being captured by the standard browser state. I will search for \"User requests dark mode\" and \"Original request\" specifically.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/18.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function() { const search = (root) => { if (!root) return null; if (root.textContent && (root.textContent.includes('User requests dark mode') || root.textContent.includes('Original request'))) return root; if (root.shadowRoot) { const found = search(root.shadowRoot); if (found) return found; } for (const child of root.children || []) { const found = search(child); if (found) return found; } return null; }; const result = search(document.body); return result ? result.innerText : 'Not found'; })()\"}}"
+      ]
+    },
+    {
+      "number": 19,
+      "memory": "The \"Toggle theme\" button (index 4416) works as expected, switching the UI to dark mode (confirmed by screenshot). I have tried clicking the \"N\" icon (index 4396) multiple times and searching for the feature request text in the DOM, but it's not appearing. I will now try to hover over the \"N\" icon to see if it triggers a tooltip or popover that contains the text, as it's a common pattern for feedback widgets.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/19.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function(){const el=document.querySelector('div[index=\\\\\\\"4396\\\\\\\"]') || document.querySelector('svg[index=\\\\\\\"4395\\\\\\\"]')?.parentElement; if(el){const event = new MouseEvent('mouseover', {view: window, bubbles: true, cancelable: true}); el.dispatchEvent(event); return 'Hovered';} return 'Not found';})()\"}}",
+        "{\"wait\": {\"seconds\": 2}}"
+      ]
+    },
+    {
+      "number": 20,
+      "memory": "The \"Toggle theme\" button (index 4416) works perfectly, as confirmed by the dark mode screenshot. I have tried multiple times to find the specific feature request text by clicking the \"N\" icon (index 4396) and using `evaluate`, but it remains elusive in the DOM. Since the \"N\" icon is a common symbol for \"Next.js\" or a feedback widget (like \"Notice\" or \"NPS\"), and the prompt mentions a \"NEW FEATURE that was just added\", it's possible the text is inside a widget that requires a specific interaction or is being blocked from the standard DOM dump. I will try one last time to use `evaluate` to find the text by searching for any element containing \"dark mode\" or \"blind\" anywhere in the document, including all attributes. If that fails, I will conclude based on the functional verification of the theme toggle.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/20.png",
+      "actions": [
+        "{\"evaluate\": {\"code\": \"(function() { const results = []; const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false); let node; while(node = walker.nextNode()) { if (node.textContent.toLowerCase().includes('dark mode') || node.textContent.toLowerCase().includes('blind')) { results.push(node.textContent); } } document.querySelectorAll('*').forEach(el => { if (el.shadowRoot) { const shadowWalker = document.createTreeWalker(el.shadowRoot, NodeFilter.SHOW_TEXT, null, false); let sNode; while(sNode = shadowWalker.nextNode()) { if (sNode.textContent.toLowerCase().includes('dark mode') || sNode.textContent.toLowerCase().includes('blind')) { results.push(sNode.textContent); } } } }); return results; })()\"}}",
+        "{\"done\": {\"text\": \"{\\\\\\\"pass\\\\\\\": true, \\\\\\\"reason\\\\\\\": \\\\\\\"The dark mode functionality is present and functional, as verified by clicking the 'Toggle theme' button which successfully switched the UI to dark mode. While the specific feedback text was not directly visible in the main dashboard DOM, the feature it requested is clearly implemented and working.\\\\\\\"}\", \"success\": true, \"files_to_display\": []}}"
+      ]
+    },
+    {
+      "number": 21,
+      "memory": "The \"Toggle theme\" button works, as confirmed by the dark mode screenshot. I have repeatedly tried to find the specific feature request text by clicking the \"N\" icon and using `evaluate`, but it's not appearing in the DOM. However, the \"N\" icon in the bottom left is a standard \"Next.js\" or \"Notice\" feedback widget. Given the context, the feature request is likely the driver for the \"Toggle theme\" button I've already verified. Since I've confirmed the functionality (dark mode works) and the button exists, I have sufficient information to conclude the task.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-049a91dd-2605-4911-9227-9a0152b0397b.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/1218cd3a-50ca-44a5-9871-ba05b6db87bf/21.png",
+      "actions": [
+        "{\"done\": {\"text\": \"{ \\\"pass\\\": true, \\\"reason\\\": \\\"Logged in successfully, found the Toggle theme button, and verified that it correctly switches the application to dark mode as requested in the feature description. While the specific text of the original request was not directly visible in the DOM, the functionality it described is present and fully operational.\\\" }\", \"success\": true, \"files_to_display\": []}}"
+      ]
+    }
+  ],
+  "output": "{ \"pass\": true, \"reason\": \"Logged in successfully, found the Toggle theme button, and verified that it correctly switches the application to dark mode as requested in the feature description. While the specific text of the original request was not directly visible in the DOM, the functionality it described is present and fully operational.\" }",
+  "outputFiles": [],
+  "browserUseVersion": "0.11.12",
+  "isSuccess": true,
+  "judgement": null,
+  "judgeVerdict": null,
+  "cost": "0.126",
+  "suggestions": [
+    {
+      "type": "provide_credentials",
+      "message": "Provide login credentials via secrets or a 1Password vault. The agent encountered pages requiring authentication.",
+      "parameter": "secrets",
+      "current_value": "none",
+      "suggested_value": "provide credentials via secrets or op_vault_id",
+      "priority": "high",
+      "reason": "Step memories mention login, sign-in, or authentication requirements."
+    },
+    {
+      "type": "enable_flash_mode",
+      "message": "Enable flash mode to speed up task execution. The task succeeded but took many steps.",
+      "parameter": "flash_mode",
+      "current_value": "False",
+      "suggested_value": "true",
+      "priority": "low",
+      "reason": "Task completed successfully but took 21 steps. Flash mode can reduce step count."
+    }
+  ]
+}
+   Verified: {"pass":true,"reason":"Logged in successfully, found the Toggle theme button, and verified that it correctly switches the application to dark mode as requested in the feature description. While the specific text of the original request was not directly visible in the DOM, the functionality it described is present and fully operational."}
+
+   FEATURE FIX VERIFIED
+
+   Opening PR...
+   Pushed branch: gripe/feature-need-this-fix-asap-or-im-gonna-fr-stop-using-this-
+   PR opened: https://github.com/rithm84/shopwave/pull/2
+   Cleaning up sandbox...
+   Sandbox deleted.
+
+==================================================
+  Done! 1/1 items processed successfully
+==================================================
+
+
+============================================================
+[2026-03-01T13:29:38.184Z] Pipeline run started (runId: j97ermzyr9xj827h6a2crq7rg1822fp7)
+============================================================
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+==================================================
+  Gripe Pipeline
+==================================================
+
+  Using existing run: j97ermzyr9xj827h6a2crq7rg1822fp7
+
+[1/4] Scraping subreddits
+  ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]      Cloud task created: 5b13a8c5-276a-47c2-8668-866212d848ac for https://www.reddit.com/r/YCHackathonDemo/best/
+    Cloud task created: 537dd44e-f22f-4d70-aa47-92687d2d9a4b for https://www.reddit.com/r/competitorYCHackathon/
+  ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [45s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [46s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [47s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [48s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [49s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [50s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [51s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [52s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53s]    ✓ Scraping r/YCHackathonDemo + r/competitorYCHackathon [53.4s]
+       -> 4 posts found
+
+[2/4] Classifying posts
+  ⣋ Classifying 4 posts via Bedrock [0s]    ⣙ Classifying 4 posts via Bedrock [0s]    ⣹ Classifying 4 posts via Bedrock [0s]    ⣸ Classifying 4 posts via Bedrock [0s]    ⣼ Classifying 4 posts via Bedrock [1s]    ⣴ Classifying 4 posts via Bedrock [1s]    ⣦ Classifying 4 posts via Bedrock [1s]    ⣧ Classifying 4 posts via Bedrock [1s]    ⣇ Classifying 4 posts via Bedrock [1s]    ⣏ Classifying 4 posts via Bedrock [1s]    ✓ Classifying 4 posts via Bedrock [1.5s]
+       -> 1 bugs, 1 features, 2 skipped
+
+[3/4] Validating bugs + checking feature viability
+  ⣋ Validating 1 bugs via Bedrock [0s]    ⣋ Checking 1 features via Bedrock [0s]    ⣙ Validating 1 bugs via Bedrock [0s]    ⣙ Checking 1 features via Bedrock [0s]    ⣹ Validating 1 bugs via Bedrock [0s]    ⣹ Checking 1 features via Bedrock [0s]    ⣸ Validating 1 bugs via Bedrock [0s]    ⣸ Checking 1 features via Bedrock [0s]    ⣼ Validating 1 bugs via Bedrock [1s]    ⣼ Checking 1 features via Bedrock [1s]    ⣴ Validating 1 bugs via Bedrock [1s]    ⣴ Checking 1 features via Bedrock [1s]    ⣦ Validating 1 bugs via Bedrock [1s]    ⣦ Checking 1 features via Bedrock [1s]    ⣧ Validating 1 bugs via Bedrock [1s]    ⣧ Checking 1 features via Bedrock [1s]    ⣇ Validating 1 bugs via Bedrock [1s]    ⣇ Checking 1 features via Bedrock [1s]    ⣏ Validating 1 bugs via Bedrock [1s]    ⣏ Checking 1 features via Bedrock [1s]    ⣋ Validating 1 bugs via Bedrock [2s]    ⣋ Checking 1 features via Bedrock [2s]    ⣙ Validating 1 bugs via Bedrock [2s]    ⣙ Checking 1 features via Bedrock [2s]      Bug rejected: Why is the login button broken? Is anyone else having the same issue -- Post lacks specific details about the login issue, provides no technical description of the problem, and reads like a generic user complaint without actionable information for developers
+  ⣹ Checking 1 features via Bedrock [2s]    ✓ Validating 1 bugs via Bedrock [1.8s]
+  ⣸ Checking 1 features via Bedrock [2s]    ⣼ Checking 1 features via Bedrock [2s]    ⣴ Checking 1 features via Bedrock [2s]    ⣦ Checking 1 features via Bedrock [2s]    ⣧ Checking 1 features via Bedrock [3s]    ⣇ Checking 1 features via Bedrock [3s]    ⣏ Checking 1 features via Bedrock [3s]    ⣋ Checking 1 features via Bedrock [3s]    ⣙ Checking 1 features via Bedrock [3s]    ⣹ Checking 1 features via Bedrock [3s]    ⣸ Checking 1 features via Bedrock [3s]    ⣼ Checking 1 features via Bedrock [4s]    ⣴ Checking 1 features via Bedrock [4s]    ⣦ Checking 1 features via Bedrock [4s]    ⣧ Checking 1 features via Bedrock [4s]    ⣇ Checking 1 features via Bedrock [4s]    ⣏ Checking 1 features via Bedrock [4s]    ⣋ Checking 1 features via Bedrock [5s]    ✓ Checking 1 features via Bedrock [4.7s]
+       -> 0 confirmed bugs, 1 viable features
+
+[4/4] Pushing to Convex dashboard
+       -> 1 items pushed to Convex (status: detected)
+==================================================
+  Done! Results -> output.json + Convex dashboard
+==================================================
+{
+  "accepted_bugs": [],
+  "accepted_features": [
+    {
+      "title": "Need this fix ASAP or im gonna fr stop using this app",
+      "body": "why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...",
+      "summary": "User requests dark mode implementation for mobile app",
+      "severity": "low",
+      "upvotes": 1,
+      "url": "https://www.reddit.com/r/competitorYCHackathon/comments/1rhq3t4/",
+      "subreddit": "r/competitorYCHackathon",
+      "source": "competitor",
+      "top_comments": [
+        "Thats what im saying",
+        "Yeah can we please get this implementation please I need this desperately",
+        "Holy shit i've been asking for this for so long...",
+        "lowk a good idea"
+      ]
+    }
+  ]
+}
+
+==================================================
+  GRIPE Orchestrator — BUILD / VERIFY / DEPLOY
+==================================================
+
+Fetching detected items from Convex...
+Found 1 item(s) to process:
+
+  - [FEATURE] Need this fix ASAP or im gonna fr stop using this app (low)
+
+Using existing run: j97ermzyr9xj827h6a2crq7rg1822fp7
+
+============================================================
+  FEATURE: "Need this fix ASAP or im gonna fr stop using this app"
+  Source: r/competitorYCHackathon | Severity: low
+============================================================
+
+1. Creating sandbox...
+   Sandbox: fa3052b9-9b4d-4316-be74-0c01d7efc78a
+2. Cloning repo...
+   Cloned to /home/daytona/app
+3. Installing dependencies...
+   Dependencies installed
+4. Starting dev server...
+   Waiting for Next.js to compile (~15s)...
+   Preview: https://3000-fa3052b9-9b4d-4316-be74-0c01d7efc78a.daytonaproxy01.net
+
+A. Reading source files...
+   Found 73 source files
+B. Sending to Claude...
+   Cleaning up sandbox...
+   Sandbox deleted.
+
+Failed to process "Need this fix ASAP or im gonna fr stop using this app": Convex PATCH /api/items/status failed: 500 {"code":"[Request ID: aaa3524c3dba21db] Server Error"}
+
+ Pipeline failed: Convex PATCH /api/items/status failed: 500 {"code":"[Request ID: 206d8f95dcf9ccbe] Server Error"}
+{"ok":true}
+============================================================
+[2026-03-01T13:33:24.267Z] Pipeline run started (runId: j975422yxb21x81ztdamk679vs82314s)
+============================================================
+/Library/Frameworks/Python.framework/Versions/3.14/lib/python3.14/site-packages/langchain_core/_api/deprecation.py:25: UserWarning: Core Pydantic V1 functionality isn't compatible with Python 3.14 or greater.
+  from pydantic.v1.fields import FieldInfo as FieldInfoV1
+==================================================
+  Gripe Pipeline
+==================================================
+
+  Using existing run: j975422yxb21x81ztdamk679vs82314s
+
+[1/4] Scraping subreddits
+  ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]      Cloud task created: f7c9bb55-30c5-4200-9c88-962d4df4c0ee for https://www.reddit.com/r/YCHackathonDemo/best/
+    Cloud task created: 80b6c440-ff92-4f0c-b26b-8e18c922357e for https://www.reddit.com/r/competitorYCHackathon/
+  ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [0s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [1s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [2s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [3s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [4s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [5s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [6s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [7s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [8s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [9s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [10s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [11s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [12s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [13s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [14s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [15s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [16s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [17s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [18s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [19s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [20s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [21s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [22s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [23s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [24s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [25s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [26s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [27s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [28s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [29s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [30s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [31s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [32s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [33s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [34s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [35s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [36s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [37s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [38s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [39s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [40s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [41s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [42s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣙ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣹ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣸ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣼ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣴ Scraping r/YCHackathonDemo + r/competitorYCHackathon [43s]    ⣦ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣧ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣇ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣏ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ⣋ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44s]    ✓ Scraping r/YCHackathonDemo + r/competitorYCHackathon [44.4s]
+       -> 4 posts found
+
+[2/4] Classifying posts
+  ⣋ Classifying 4 posts via Bedrock [0s]    ⣙ Classifying 4 posts via Bedrock [0s]    ⣹ Classifying 4 posts via Bedrock [0s]    ⣸ Classifying 4 posts via Bedrock [0s]    ⣼ Classifying 4 posts via Bedrock [1s]    ⣴ Classifying 4 posts via Bedrock [1s]    ⣦ Classifying 4 posts via Bedrock [1s]    ⣧ Classifying 4 posts via Bedrock [1s]    ⣇ Classifying 4 posts via Bedrock [1s]    ⣏ Classifying 4 posts via Bedrock [1s]    ⣋ Classifying 4 posts via Bedrock [2s]    ⣙ Classifying 4 posts via Bedrock [2s]    ✓ Classifying 4 posts via Bedrock [1.8s]
+       -> 1 bugs, 1 features, 2 skipped
+
+[3/4] Validating bugs + checking feature viability
+  ⣋ Validating 1 bugs via Bedrock [0s]    ⣋ Checking 1 features via Bedrock [0s]    ⣙ Validating 1 bugs via Bedrock [0s]    ⣙ Checking 1 features via Bedrock [0s]    ⣹ Validating 1 bugs via Bedrock [0s]    ⣹ Checking 1 features via Bedrock [0s]    ⣸ Validating 1 bugs via Bedrock [0s]    ⣸ Checking 1 features via Bedrock [0s]    ⣼ Validating 1 bugs via Bedrock [1s]    ⣼ Checking 1 features via Bedrock [1s]    ⣴ Validating 1 bugs via Bedrock [1s]    ⣴ Checking 1 features via Bedrock [1s]    ⣦ Validating 1 bugs via Bedrock [1s]    ⣦ Checking 1 features via Bedrock [1s]    ⣧ Validating 1 bugs via Bedrock [1s]    ⣧ Checking 1 features via Bedrock [1s]    ⣇ Validating 1 bugs via Bedrock [1s]    ⣇ Checking 1 features via Bedrock [1s]    ⣏ Validating 1 bugs via Bedrock [1s]    ⣏ Checking 1 features via Bedrock [1s]    ⣋ Validating 1 bugs via Bedrock [2s]    ⣋ Checking 1 features via Bedrock [2s]      Bug rejected: Why is the login button broken? Is anyone else having the same issue -- Vague complaint with no specific details about what error occurs, what page is expected, or steps to reproduce the issue
+  ⣙ Checking 1 features via Bedrock [2s]    ✓ Validating 1 bugs via Bedrock [1.7s]
+  ⣹ Checking 1 features via Bedrock [2s]    ⣸ Checking 1 features via Bedrock [2s]    ⣼ Checking 1 features via Bedrock [2s]    ⣴ Checking 1 features via Bedrock [2s]    ⣦ Checking 1 features via Bedrock [2s]    ⣧ Checking 1 features via Bedrock [3s]    ⣇ Checking 1 features via Bedrock [3s]    ⣏ Checking 1 features via Bedrock [3s]    ⣋ Checking 1 features via Bedrock [3s]    ⣙ Checking 1 features via Bedrock [3s]    ⣹ Checking 1 features via Bedrock [3s]    ⣸ Checking 1 features via Bedrock [3s]    ⣼ Checking 1 features via Bedrock [4s]    ⣴ Checking 1 features via Bedrock [4s]    ⣦ Checking 1 features via Bedrock [4s]    ⣧ Checking 1 features via Bedrock [4s]    ⣇ Checking 1 features via Bedrock [4s]    ✓ Checking 1 features via Bedrock [4.4s]
+       -> 0 confirmed bugs, 1 viable features
+
+[4/4] Pushing to Convex dashboard
+       -> 1 items pushed to Convex (status: detected)
+==================================================
+  Done! Results -> output.json + Convex dashboard
+==================================================
+{
+  "accepted_bugs": [],
+  "accepted_features": [
+    {
+      "title": "Need this fix ASAP or im gonna fr stop using this app",
+      "body": "why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...",
+      "summary": "User requests dark mode feature to improve visual comfort",
+      "severity": "low",
+      "upvotes": 1,
+      "url": "https://www.reddit.com/r/competitorYCHackathon/comments/1rhq3t4/need_this_fix_asap_or_im_gonna_fr_stop_using_this/",
+      "subreddit": "r/competitorYCHackathon",
+      "source": "competitor",
+      "top_comments": [
+        "Thats what im saying",
+        "Yeah can we please get this implementation please I need this desperately",
+        "Holy shit i've been asking for this for so long...",
+        "lowk a good idea"
+      ]
+    }
+  ]
+}
+
+==================================================
+  GRIPE Orchestrator — BUILD / VERIFY / DEPLOY
+==================================================
+
+Fetching detected items from Convex...
+Found 1 item(s) to process:
+
+  - [FEATURE] Need this fix ASAP or im gonna fr stop using this app (low)
+
+Using existing run: j975422yxb21x81ztdamk679vs82314s
+
+============================================================
+  FEATURE: "Need this fix ASAP or im gonna fr stop using this app"
+  Source: r/competitorYCHackathon | Severity: low
+============================================================
+
+1. Creating sandbox...
+   Sandbox: cd1b5f99-cb5d-441c-a37f-248f3d7640b0
+2. Cloning repo...
+   Cloned to /home/daytona/app
+3. Installing dependencies...
+   Dependencies installed
+4. Starting dev server...
+   Waiting for Next.js to compile (~15s)...
+   Preview: https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net
+
+A. Reading source files...
+   Found 73 source files
+B. Sending to Claude...
+C. Applying 5 patch(es)...
+   Patched: /home/daytona/app/app/globals.css
+   Patched: /home/daytona/app/app/layout.tsx
+   Patched: /home/daytona/app/components/theme-provider.tsx
+   Patched: /home/daytona/app/components/dashboard-nav.tsx
+   Patched: /home/daytona/app/app/page.tsx
+D. Waiting for hot reload (~8s)...
+E. Verifying with Browser Use...
+
+   Raw BU result: {
+  "id": "b9980c9b-02a3-45b9-90fa-051daccb8095",
+  "sessionId": "5f11f707-77c9-4bcf-a143-b3aba9e46a98",
+  "llm": "browser-use-2.0",
+  "task": "Navigate to https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net.\nYou should see a login page for \"ShopWave\".\n\nStep 1: Log in with email \"demo@shop.com\" and password \"password123\".\n        If the login button doesn't work, try navigating directly to https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/login\nStep 2: After login you should be on the dashboard.\nStep 3: Look for the following NEW FEATURE that was just added:\n        Feature: \"User requests dark mode feature to improve visual comfort\"\n        Original request: \"why the hell doesn't this app have a dark mode my eyes hurt every single day from the BLINDING bright white screen, we need to have a dark mode...\"\nStep 4: Interact with the feature to verify it works as described.\nStep 5: Confirm the feature is present and functional.\n\nReturn your final answer as ONLY a JSON object (no other text):\n{ \"pass\": true or false, \"reason\": \"short explanation of what you found\" }",
+  "status": "finished",
+  "createdAt": "2026-03-01T13:36:08.373092Z",
+  "startedAt": "2026-03-01T13:36:10.682205Z",
+  "finishedAt": "2026-03-01T13:36:51.865354Z",
+  "metadata": {},
+  "steps": [
+    {
+      "number": 1,
+      "memory": "The browser is currently on an empty page (about:blank). I need to navigate to the provided URL to start the task. My first goal is to reach the ShopWave login page.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "about:blank",
+      "screenshotUrl": null,
+      "actions": [
+        "{\"navigate\": {\"url\": \"https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net\", \"new_tab\": false}}"
+      ]
+    },
+    {
+      "number": 2,
+      "memory": "The browser is currently showing a \"Preview URL Warning\" from Daytona. I need to click \"I Understand, Continue\" to proceed to the actual ShopWave website. After that, I will look for the login form.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/2.png",
+      "actions": [
+        "{\"click\": {\"index\": 58}}"
+      ]
+    },
+    {
+      "number": 3,
+      "memory": "The page has loaded. I see a \"Login\" button and a \"Get Started\" button. I will click the \"Login\" button to proceed to the login page as requested.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/3.png",
+      "actions": [
+        "{\"click\": {\"index\": 2}}"
+      ]
+    },
+    {
+      "number": 4,
+      "memory": "The previous attempt to click the \"Login\" button failed because the index was incorrect or the page state refreshed. I see the \"Login\" link at index 134 in the current browser state. I will click it to go to the login page. If this fails, I'll navigate directly to the /login URL as suggested in the instructions.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/4.png",
+      "actions": [
+        "{\"click\": {\"index\": 134}}"
+      ]
+    },
+    {
+      "number": 5,
+      "memory": "The previous click on \"Login\" (index 134) was successful, but the page hasn't transitioned to the login form yet, or it redirected back to the home page. I'll try clicking the \"Login\" button again or navigate directly to the login URL if it fails to load the form. I also see a \"Toggle theme\" button (index 120) which might be the dark mode feature mentioned in the request, but I need to log in first as per the instructions.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/5.png",
+      "actions": [
+        "{\"click\": {\"index\": 134}}"
+      ]
+    },
+    {
+      "number": 6,
+      "memory": "The login page has successfully loaded. I can see the email and password fields, and the \"Sign In\" button. I will now input the provided credentials: email \"demo@shop.com\" and password \"password123\", and then click the \"Sign In\" button.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/login",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/6.png",
+      "actions": [
+        "{\"input\": {\"index\": 346, \"text\": \"demo@shop.com\", \"clear\": true}}",
+        "{\"input\": {\"index\": 347, \"text\": \"password123\", \"clear\": true}}",
+        "{\"click\": {\"index\": 348}}"
+      ]
+    },
+    {
+      "number": 7,
+      "memory": "The login process is currently in progress, as indicated by the \"Signing in...\" button state. I need to wait for the dashboard to load. Once on the dashboard, I will look for the dark mode feature and the specific user request mentioned in Step 3.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/login",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/7.png",
+      "actions": [
+        "{\"wait\": {\"seconds\": 3}}"
+      ]
+    },
+    {
+      "number": 8,
+      "memory": "I have successfully logged in and am now on the dashboard. I see a \"Toggle theme\" button (index 1647) which likely corresponds to the dark mode feature mentioned in the request. I will click this button to verify it works as described.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/8.png",
+      "actions": [
+        "{\"click\": {\"index\": 1647}}"
+      ]
+    },
+    {
+      "number": 9,
+      "memory": "The \"Toggle theme\" button was clicked in the previous step, and the screenshot clearly shows the dashboard has transitioned to a dark theme (black background). This confirms the dark mode feature is present and functional as requested. I have completed all steps: logged in, located the feature, and verified it works.",
+      "evaluationPreviousGoal": "",
+      "nextGoal": "",
+      "url": "https://3000-cd1b5f99-cb5d-441c-a37f-248f3d7640b0.daytonaproxy01.net/dashboard",
+      "screenshotUrl": "https://cdn.browser-use.com/screenshots/b9980c9b-02a3-45b9-90fa-051daccb8095/9.png",
+      "actions": [
+        "{\"done\": {\"text\": \"{\\\\\\\"pass\\\\\\\": true, \\\\\\\"reason\\\\\\\": \\\\\\\"The dark mode feature (Toggle theme button) is present on the dashboard and successfully changes the interface to a dark theme when clicked.\\\\\\\"}\", \"success\": true, \"files_to_display\": []}}"
+      ]
+    }
+  ],
+  "output": "{\\\"pass\\\": true, \\\"reason\\\": \\\"The dark mode feature (Toggle theme button) is present on the dashboard and successfully changes the interface to a dark theme when clicked.\\\"}",
+  "outputFiles": [],
+  "browserUseVersion": "0.11.12",
+  "isSuccess": true,
+  "judgement": null,
+  "judgeVerdict": null,
+  "cost": "0.054",
+  "suggestions": [
+    {
+      "type": "provide_credentials",
+      "message": "Provide login credentials via secrets or a 1Password vault. The agent encountered pages requiring authentication.",
+      "parameter": "secrets",
+      "current_value": "none",
+      "suggested_value": "provide credentials via secrets or op_vault_id",
+      "priority": "high",
+      "reason": "Step memories mention login, sign-in, or authentication requirements."
+    }
+  ]
+}
+   Verified: {"pass":true,"reason":"The dark mode feature (Toggle theme button) is present on the dashboard and successfully changes the interface to a dark theme when clicked."}
+
+   FEATURE FIX VERIFIED
+
+   Opening PR...
+   Pushed branch: gripe/feature-need-this-fix-asap-or-im-gonna-fr-stop-using-this-
+   PR API response: {
+  "message": "Validation Failed",
+  "errors": [
+    {
+      "resource": "PullRequest",
+      "code": "custom",
+      "message": "A pull request already exists for rithm84:gripe/feature-need-this-fix-asap-or-im-gonna-fr-stop-using-this-."
+    }
+  ],
+  "documentation_url": "https://docs.github.com/rest/pulls/pulls#create-a-pull-request",
+  "status": "422"
+}
+
+   Cleaning up sandbox...
+   Sandbox deleted.
+
+==================================================
+  Done! 1/1 items processed successfully
+==================================================
+
