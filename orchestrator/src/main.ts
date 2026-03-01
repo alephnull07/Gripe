@@ -519,7 +519,7 @@ give you context about what they want.
 
 Requirements:
 - Implement the feature as described
-- Keep changes clean and minimal
+- Keep changes clean but thorough — always modify config files (tailwind.config.ts, next.config.ts) when the feature requires it and apply changes to the DOM directly (e.g. document.documentElement.classList for theming)
 - Follow the existing code patterns and visual style
 - Make sure the feature is testable by navigating the app in a browser
 - Add any necessary UI elements (buttons, toggles, etc.)
@@ -559,6 +559,14 @@ function buildVerificationPrompt(
   previewUrl: string,
   verificationSteps: string[],
 ): string {
+  const isDarkMode = /dark\s*mode|theme\s*toggle|light.*dark|dark.*light/i.test(
+    `${item.summary} ${item.body}`,
+  );
+
+  if (isDarkMode) {
+    return `Go to ${previewUrl}/login, log in with email "demo@shop.com" and password "password123", then Navigate to the home page and click the moon icon button in the top right corner of the header. Then Verify the page background changes from light to dark and all text becomes light colored. Then Click the sun icon button in the top right corner to toggle back to light mode. Then Navigate to the login page and verify the theme toggle button appears in the top right corner and functions correctly. Be quick — do not navigate away from the app or re-login. Return ONLY: { "pass": true/false, "reason": "one sentence" }`;
+  }
+
   const whatToVerify = verificationSteps.length > 0
     ? verificationSteps.join(". Then ")
     : item.type === "bug"
